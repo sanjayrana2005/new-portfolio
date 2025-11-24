@@ -43,7 +43,6 @@ const deleteMessageValidation = (req) => {
 }
 
 const validateSignupUser = (req) => {
-    console.log(req.body)
     if(!req.files || Object.keys(req.files).length === 0){
         throw new Error("Avatar and Resume are required");
     }
