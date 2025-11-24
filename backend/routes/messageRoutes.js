@@ -1,5 +1,5 @@
 const express = require("express");
-const { sendMessageController, getAllMessageController, deleteMessageController } = require("../middleware/messageController");
+const { sendMessageController, getAllMessageController, deleteMessageController } = require("../controller/messageController");
 
 const messageRouter = express.Router();
 

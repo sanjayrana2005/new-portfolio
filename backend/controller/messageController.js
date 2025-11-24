@@ -1,5 +1,5 @@
 const messageModel = require("../models/messageSchema");
-const { sendMessageValidation, deleteMessageValidation } = require("./validation");
+const { sendMessageValidation, deleteMessageValidation } = require("../middleware/validation");
 
 const sendMessageController = async (req, res) => {
     try {

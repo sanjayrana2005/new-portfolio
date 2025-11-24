@@ -42,7 +42,34 @@ const deleteMessageValidation = (req) => {
     return true;
 }
 
+const validateSignupUser = (req) => {
+    console.log(req.body)
+    if(!req.files || Object.keys(req.files).length === 0){
+        throw new Error("Avatar and Resume are required");
+    }
+
+    const { 
+    fullName,
+    email,
+    password,
+    phone,
+    aboutMe,
+    gitHubURL,
+    linkedInURL,
+    } = req.body;
+
+
+    if(!fullName||
+    !email||
+    !password||
+    !phone){
+        throw new Error("fill required fields")
+    }
+
+    return true;
+}
 module.exports = {
     sendMessageValidation,
     deleteMessageValidation,
+    validateSignupUser,
 }
