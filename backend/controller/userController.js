@@ -1,11 +1,11 @@
-const { signupUserValidattion } = require('../middleware/validation');
+const { signupUserValidattion, loginUserValidation, updateProfileValidation } = require('../middleware/validation');
 const userModel = require('../models/userSchema');
 const cloudinary = require('../utils/cloudinary');
 const bcrypt = require("bcrypt");
+const generateToken = require('../utils/generateToken');
 
 
 const signupUserController = async (req, res) => {
-
     try {
         signupUserValidattion(req);
         const { avatar, resume } = req.files;
@@ -23,7 +23,7 @@ const signupUserController = async (req, res) => {
             });
         }
 
-        const hashPassword = await bcrypt.hash(password,10);
+        const hashPassword = await bcrypt.hash(password, 10);
 
         const cloudinaryResponseForAvatar = await cloudinary.uploader.upload(
             avatar.tempFilePath,
@@ -32,7 +32,9 @@ const signupUserController = async (req, res) => {
             }
         );
         if (!cloudinaryResponseForAvatar || cloudinaryResponseForAvatar.error) {
-            console.error("Cloudinary Error : ", cloudinaryResponseForAvatar.error || "Unknown cloudinary error");
+            return res.status(500).json({
+                message:"Avtar upload failed",
+            }); 
         };
 
         const cloudinaryResponseForResume = await cloudinary.uploader.upload(
@@ -42,13 +44,16 @@ const signupUserController = async (req, res) => {
             }
         );
         if (!cloudinaryResponseForResume || cloudinaryResponseForResume.error) {
-            console.error("Cloudinary Error : ", cloudinaryResponseForResume.error || "Unknown cloudinary error");
+            await cloudinary.uploader.destroy(cloudinaryResponseForAvatar.public_id);
+             return res.status(500).json({
+                message:"Resume upload failed",
+            }); 
         };
 
-        await userModel.create({
+        const user = await userModel.create({
             fullName,
             email,
-            password:hashPassword,
+            password: hashPassword,
             phone,
             aboutMe,
             avatar: {
@@ -61,9 +66,18 @@ const signupUserController = async (req, res) => {
             },
         });
 
+        const token = generateToken(user);
+
+        res.cookie("portfolioToken", token, {
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        });
 
         res.status(200).json({
-            message: "User SignUp successfully"
+            message: "User SignUp successfully",
+            token
         })
     } catch (error) {
         res.json({
@@ -72,6 +86,92 @@ const signupUserController = async (req, res) => {
     }
 }
 
+const loginController = async (req,res) => {
+    try {
+        loginUserValidation(req);
+        const {email,password} = req.body;
+
+        const ExistUser = await userModel.findOne({email}).select("+password");
+        if(!ExistUser){
+            return res.status(400).json({
+                message:"Invalid Email or Password"
+            });
+        }
+    
+        const comparePassword = await bcrypt.compare(password,ExistUser.password);
+        if(!comparePassword){
+            return res.status(400).json({
+                message:"Invalid Email or Password"
+            });
+        }
+
+        const token = generateToken(ExistUser);
+        res.cookie("portfolioToken",token,{
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        });
+
+        res.status(200).json({
+            message:"Login successfully",
+            token,
+            user:ExistUser
+        })
+
+    } catch (error) {
+        res.json({
+            message:error.message
+        })
+    }
+}
+
+const logOutController = (req,res) => {
+    res
+    .cookie("portfolioToken","",{
+        expires:new Date(Date.now()),
+        httpOnly:true,
+        secure:true,
+        sameSite:"none"
+    })
+    .status(200).json({
+        message:"Log out"
+    })
+}
+
+const getUserController = async (req,res) => {
+    try {
+        const {_id} = req.user;
+
+        const user = await userModel.findById({_id});  
+
+        res.status(200).json({
+            user
+        })
+    } catch (error) {
+        res.json({
+            message:error.message
+        })
+    }
+}
+
+const updateProfilecontroller = async (req,res) => {
+    try {
+        updateProfileValidation(req);
+        res.status(200).json({
+            message:"Profile uspdated"
+        })
+    } catch (error) {
+        res.json({
+            message:error.message
+        })
+    }
+}
+
 module.exports = {
     signupUserController,
+    loginController,
+    logOutController,
+    getUserController,
+    updateProfilecontroller
 }

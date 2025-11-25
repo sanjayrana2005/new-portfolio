@@ -3,9 +3,11 @@ const connectDB = require("./Config/ConnectDB");
 const messageRouter = require("./routes/messageRoutes");
 const userRouter = require("./routes/userRoutes");
 const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 require("dotenv").config();
+app.use(cookieParser());
 
 app.use(
     fileUpload({
@@ -17,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-app.use("/api",messageRouter);
-app.use("/api",userRouter);
+app.use("/",messageRouter);
+app.use("/",userRouter);
 
 
 connectDB()
