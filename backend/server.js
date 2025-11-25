@@ -4,6 +4,7 @@ const messageRouter = require("./routes/messageRoutes");
 const userRouter = require("./routes/userRoutes");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
+const timeLineRouter = require("./routes/timeLineRoute");
 
 const app = express();
 require("dotenv").config();
@@ -21,6 +22,7 @@ app.use(
 
 app.use("/",messageRouter);
 app.use("/",userRouter);
+app.use("/",timeLineRouter);
 
 
 connectDB()

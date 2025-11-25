@@ -272,7 +272,7 @@ const getUserForPortfolioController = async (req, res) => {
     }
 }
 
-const   forgotPasswordController = async (req, res) => {
+const forgotPasswordController = async (req, res) => {
     try {
         forgotPasswordValidation(req);
         const { email } = req.body;
