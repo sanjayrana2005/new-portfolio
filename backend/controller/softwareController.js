@@ -30,7 +30,7 @@ const addNewApplicationController = async (req,res) => {
             softwareApplication
         })
     } catch (error) {
-        res.json({
+        res.status(400).json({
             message:error.message
         })
     }
@@ -55,7 +55,7 @@ const deleteApplicationController = async (req,res) => {
             message:"Application deleted"
         })
     } catch (error) {
-        res.json({
+         res.status(400).json({
             message:error.message
         })
     }
@@ -68,7 +68,7 @@ const getAllApplicationController = async (req,res) => {
             getAllApplication
         })
     } catch (error) {
-        res.json({
+         res.status(400).json({
             message:error.message
         })
     }

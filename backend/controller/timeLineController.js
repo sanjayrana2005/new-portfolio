@@ -20,8 +20,8 @@ const postTimeLineController = async (req, res) => {
             newTimeline
         })
     } catch (error) {
-        res.json({
-            message: error.message
+         res.status(400).json({
+            message:error.message
         })
     }
 }
@@ -42,9 +42,9 @@ const deleteTimeLineController = async (req, res) => {
         });
 
     } catch (error) {
-        res.json({
-            message: error.message
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 const getAllTimeLineController = async (req, res) => {
@@ -54,9 +54,9 @@ const getAllTimeLineController = async (req, res) => {
             timeline
         })
     } catch (error) {
-        res.json({
+         res.status(400).json({
             message:error.message
-        })
+        });
     }
 }
 

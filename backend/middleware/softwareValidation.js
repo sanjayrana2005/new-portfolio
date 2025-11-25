@@ -1,5 +1,5 @@
 const addnewApplicationValidation = (req) => {
-    const {name} = req.body;
+    const {name,proficiency} = req.body || {};
     const {svg}=req.files || {};
 
     if(!name){

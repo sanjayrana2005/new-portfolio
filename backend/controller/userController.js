@@ -82,9 +82,9 @@ const signupUserController = async (req, res) => {
             token
         })
     } catch (error) {
-        res.json({
-            message: error.message
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 
@@ -119,12 +119,12 @@ const loginController = async (req, res) => {
             message: "Login successfully",
             token,
             user: ExistUser
-        })
+        });
 
     } catch (error) {
-        res.json({
-            message: error.message
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 
@@ -151,9 +151,9 @@ const getUserController = async (req, res) => {
             user
         })
     } catch (error) {
-        res.json({
-            message: error.message
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 
@@ -226,9 +226,9 @@ const updateProfilecontroller = async (req, res) => {
             updatedUser
         })
     } catch (error) {
-        res.json({
-            message: error.message
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 
@@ -252,9 +252,9 @@ const updatePasswordController = async (req, res) => {
             message: "Password updated"
         })
     } catch (error) {
-        res.json({
-            message: error.message
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 
@@ -266,9 +266,9 @@ const getUserForPortfolioController = async (req, res) => {
             user
         })
     } catch (error) {
-        res.json({
-            message: error.message || "something went wrong"
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 
@@ -298,9 +298,9 @@ const forgotPasswordController = async (req, res) => {
             message: `otp sent to your email ${email}`
         })
     } catch (error) {
-        res.json({
-            message: error.message
-        })
+         res.status(400).json({
+            message:error.message
+        });
     }
 }
 
@@ -345,9 +345,9 @@ const resetPasswordController = async (req,res)=>{
         })
         
     } catch (error) {
-        res.json({
+         res.status(400).json({
             message:error.message
-        })
+        });
     }
 }
 
