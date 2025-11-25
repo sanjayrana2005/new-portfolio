@@ -9,6 +9,7 @@ const app = express();
 require("dotenv").config();
 app.use(cookieParser());
 
+app.use(express.json());                                                        
 app.use(
     fileUpload({
         useTempFiles: true,
@@ -17,7 +18,6 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.json());
 
 app.use("/",messageRouter);
 app.use("/",userRouter);

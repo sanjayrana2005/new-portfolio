@@ -1,4 +1,4 @@
-const { signupUserValidattion, loginUserValidation, updateProfileValidation } = require('../middleware/validation');
+const { signupUserValidattion, loginUserValidation, updateProfileValidation, updatePasswordValidation } = require('../middleware/validation');
 const userModel = require('../models/userSchema');
 const cloudinary = require('../utils/cloudinary');
 const bcrypt = require("bcrypt");
@@ -160,11 +160,11 @@ const updateProfilecontroller = async (req, res) => {
         updateProfileValidation(req);
         const fullName = req.body?.fullName;
         const phone = req.body?.phone;
-        const aboutMe= req.body?.aboutMe;
-        const gitHubURL= req.body?.gitHubURL;
+        const aboutMe = req.body?.aboutMe;
+        const gitHubURL = req.body?.gitHubURL;
         const linkedInURL = req.body?.linkedInURL;
         const avatar = req.files?.avatar;
-        const resume  = req.files?.resume;
+        const resume = req.files?.resume;
 
         const user = await userModel.findById({ _id: req.user.id });
 
@@ -179,8 +179,8 @@ const updateProfilecontroller = async (req, res) => {
                 folder: "Avatars"
             });
             avatarData = {
-                public_id:cloudinaryResponse.public_id,
-                url:cloudinaryResponse.secure_url
+                public_id: cloudinaryResponse.public_id,
+                url: cloudinaryResponse.secure_url
             }
 
             if (!cloudinaryResponse || cloudinaryResponse.error) {
@@ -200,8 +200,8 @@ const updateProfilecontroller = async (req, res) => {
             });
 
             resumeData = {
-                public_id:cloudinaryResponse.public_id,
-                url:cloudinaryResponse.secure_url
+                public_id: cloudinaryResponse.public_id,
+                url: cloudinaryResponse.secure_url
             }
             if (!cloudinaryResponse || cloudinaryResponse.error) {
                 return res.status(500).json({
@@ -216,11 +216,12 @@ const updateProfilecontroller = async (req, res) => {
             aboutMe,
             gitHubURL,
             linkedInURL,
-            ...(avatarData && {avatar:avatarData}),
-            ...(resumeData && {resume : resumeData})
-        },{new:true})
+            ...(avatarData && { avatar: avatarData }),
+            ...(resumeData && { resume: resumeData })
+        }, { new: true })
         res.status(200).json({
-            message: "Profile updated"
+            message: "Profile updated",
+            updatedUser
         })
     } catch (error) {
         res.json({
@@ -229,10 +230,39 @@ const updateProfilecontroller = async (req, res) => {
     }
 }
 
+const updatePasswordController = async (req, res) => {
+    try {
+        updatePasswordValidation(req);
+        const { currentPassword, newPassword, confirmNewPassword } = req.body;
+        const user = await userModel.findById({_id:req.user.id}).select("+password");
+        console.log(user);
+        
+
+        const comparePAssword =await bcrypt.compare(currentPassword,user.password);
+        if(!comparePAssword){
+            return res.status(400).json({
+                message:"Incorrect Current Password"
+            })
+        }
+
+        const setNewPassword = await bcrypt.hash(newPassword,10);
+        user.password = setNewPassword;
+        await user.save();
+
+        res.status(200).json({
+            message: "Password updated"
+        })
+    } catch (error) {
+        res.json({
+            message: error.message
+        })
+    }
+}
 module.exports = {
     signupUserController,
     loginController,
     logOutController,
     getUserController,
-    updateProfilecontroller
+    updateProfilecontroller,
+    updatePasswordController,
 }

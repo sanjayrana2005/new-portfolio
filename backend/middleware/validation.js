@@ -141,10 +141,34 @@ const updateProfileValidation = (req) => {
     return true;
 }
 
+const updatePasswordValidation = (req) => {
+     const {currentPassword,newPassword,confirmNewPassword}= req.body;
+
+    if(!currentPassword){
+        throw new Error("Enter Current Password");
+    }
+    if(!newPassword){
+        throw new Error("Enter New Password");
+    }
+    if(!confirmNewPassword){
+        throw new Error("Enter confirm New Password");
+    }
+
+    if(!validator.isStrongPassword(newPassword)){
+        throw new Error("Enter a strong password");
+    }
+
+    if(newPassword  !== confirmNewPassword){
+        throw new Error("New password and Confirm new password should same");
+    }
+
+    return true;
+}
 module.exports = {
     sendMessageValidation,
     deleteMessageValidation,
     signupUserValidattion,
     loginUserValidation,
-    updateProfileValidation
+    updateProfileValidation,
+    updatePasswordValidation
 }
