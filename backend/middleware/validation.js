@@ -164,11 +164,21 @@ const updatePasswordValidation = (req) => {
 
     return true;
 }
+
+const forgotPasswordValidation = (req)=>{
+    const {email} = req.body || {};
+    if(!email){
+        throw new Error("Enter your email first");
+    }
+
+    return true;
+}
 module.exports = {
     sendMessageValidation,
     deleteMessageValidation,
     signupUserValidattion,
     loginUserValidation,
     updateProfileValidation,
-    updatePasswordValidation
+    updatePasswordValidation,
+    forgotPasswordValidation,
 }

@@ -1,8 +1,10 @@
-const { signupUserValidattion, loginUserValidation, updateProfileValidation, updatePasswordValidation } = require('../middleware/validation');
+const { signupUserValidattion, loginUserValidation, updateProfileValidation, updatePasswordValidation, forgotPasswordValidation } = require('../middleware/validation');
 const userModel = require('../models/userSchema');
 const cloudinary = require('../utils/cloudinary');
 const bcrypt = require("bcrypt");
 const generateToken = require('../utils/generateToken');
+const generateResetPAssworToken = require('../utils/generateResetPasswordToken');
+const sendResetPasswordMail = require("../utils/sendEmail");
 
 
 const signupUserController = async (req, res) => {
@@ -234,23 +236,67 @@ const updatePasswordController = async (req, res) => {
     try {
         updatePasswordValidation(req);
         const { currentPassword, newPassword, confirmNewPassword } = req.body;
-        const user = await userModel.findById({_id:req.user.id}).select("+password");
-        console.log(user);
-        
-
-        const comparePAssword =await bcrypt.compare(currentPassword,user.password);
-        if(!comparePAssword){
+        const user = await userModel.findById({ _id: req.user.id }).select("+password");
+        const comparePAssword = await bcrypt.compare(currentPassword, user.password);
+        if (!comparePAssword) {
             return res.status(400).json({
-                message:"Incorrect Current Password"
+                message: "Incorrect Current Password"
             })
         }
 
-        const setNewPassword = await bcrypt.hash(newPassword,10);
+        const setNewPassword = await bcrypt.hash(newPassword, 10);
         user.password = setNewPassword;
         await user.save();
 
         res.status(200).json({
             message: "Password updated"
+        })
+    } catch (error) {
+        res.json({
+            message: error.message
+        })
+    }
+}
+
+
+const getUserForPortfolioController = async (req, res) => {
+    try {
+        const _id = "692556c4150c21ba8018866b";
+        const user = await userModel.findById(_id);
+        res.status(200).json({
+            user
+        })
+    } catch (error) {
+        res.json({
+            message: error.message || "something went wrong"
+        })
+    }
+}
+
+const forgotPasswordController = async (req, res) => {
+    try {
+        forgotPasswordValidation(req);
+        const { email } = req.body;
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.status(400).json({
+                message: "User not found"
+            })
+        }
+        const resetPasswordToken = generateResetPAssworToken();
+        user.resetPasswordToken = resetPasswordToken;
+        user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+        await user.save();
+
+        await sendResetPasswordMail({
+            name: user.fullName,
+            to: email,
+            subject: "Reset password",
+            resetCode: resetPasswordToken,
+        });
+
+        return res.status(200).json({
+            message: `otp sent to your email ${email}`
         })
     } catch (error) {
         res.json({
@@ -265,4 +311,6 @@ module.exports = {
     getUserController,
     updateProfilecontroller,
     updatePasswordController,
+    getUserForPortfolioController,
+    forgotPasswordController
 }
