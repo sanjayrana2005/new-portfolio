@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { RESET_PASSWORD_TEMPLATE } = require("./emailTemplates");
+const { RESET_PASSWORD_TEMPLATE,RESET_PASSWORD_SUCCESS_TEMPLATE } = require("./emailTemplates");
 require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
@@ -27,4 +27,21 @@ const sendResetPasswordMail = async ({name, to, subject,resetCode}) => {
     }
 }
 
-module.exports = sendResetPasswordMail;
+const sendResetPasswordSuccessMail = async ({name, to, subject}) => {
+    try {
+        const info = await transporter.sendMail({
+            from:process.env.EMAI_USER,
+            to:to,
+            subject:subject,
+            html:RESET_PASSWORD_SUCCESS_TEMPLATE
+                .replace("{username}",name)
+        })
+    } catch (error) {
+        throw new Error("Error sending reset mail "+error.message);
+    }
+}
+
+module.exports = {
+    sendResetPasswordMail,
+    sendResetPasswordSuccessMail,
+};

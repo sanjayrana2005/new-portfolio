@@ -4,7 +4,7 @@ const cloudinary = require('../utils/cloudinary');
 const bcrypt = require("bcrypt");
 const generateToken = require('../utils/generateToken');
 const generateResetPAssworToken = require('../utils/generateResetPasswordToken');
-const sendResetPasswordMail = require("../utils/sendEmail");
+const {sendResetPasswordMail, sendResetPasswordSuccessMail} = require("../utils/sendEmail");
 
 
 const signupUserController = async (req, res) => {
@@ -241,7 +241,7 @@ const updatePasswordController = async (req, res) => {
         if (!comparePAssword) {
             return res.status(400).json({
                 message: "Incorrect Current Password"
-            })
+            });
         }
 
         const setNewPassword = await bcrypt.hash(newPassword, 10);
@@ -272,7 +272,7 @@ const getUserForPortfolioController = async (req, res) => {
     }
 }
 
-const forgotPasswordController = async (req, res) => {
+const   forgotPasswordController = async (req, res) => {
     try {
         forgotPasswordValidation(req);
         const { email } = req.body;
@@ -328,11 +328,17 @@ const resetPasswordController = async (req,res)=>{
             })
         }
 
-        user.newPassword = await bcrypt.hash(newPassword,10);
+        user.password = await bcrypt.hash(newPassword,10);
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
 
         await user.save();
+
+        await sendResetPasswordSuccessMail({
+            name:user.fullName,
+            to:user.email,
+            subject:"Password reset successfully",
+        })
 
         res.status(200).json({
             message:"Password reset success"
