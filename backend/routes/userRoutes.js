@@ -1,5 +1,5 @@
 const express = require("express");
-const { signupUserController, loginController, logOutController, getUserController, updateProfilecontroller, updatePasswordController, getUserForPortfolioController, forgotPasswordController } = require("../controller/userController");
+const { signupUserController, loginController, logOutController, getUserController, updateProfilecontroller, updatePasswordController, getUserForPortfolioController, forgotPasswordController, resetPasswordController } = require("../controller/userController");
 const authUser = require("../middleware/auth");
 
 const userRouter = express.Router();
@@ -11,6 +11,7 @@ userRouter.get("/me",authUser,getUserController);
 userRouter.patch("/update-profile",authUser,updateProfilecontroller);
 userRouter.patch("/update-password",authUser,updatePasswordController);
 userRouter.get("/get-user",getUserForPortfolioController);
-userRouter.post("/forgot-password",forgotPasswordController);
+userRouter.post("/forgot-password",authUser,forgotPasswordController);
+userRouter.post("/reset-password/:email",authUser,resetPasswordController);
 
 module.exports = userRouter;

@@ -142,37 +142,52 @@ const updateProfileValidation = (req) => {
 }
 
 const updatePasswordValidation = (req) => {
-     const {currentPassword,newPassword,confirmNewPassword}= req.body;
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
 
-    if(!currentPassword){
+    if (!currentPassword) {
         throw new Error("Enter Current Password");
     }
-    if(!newPassword){
+    if (!newPassword) {
         throw new Error("Enter New Password");
     }
-    if(!confirmNewPassword){
+    if (!confirmNewPassword) {
         throw new Error("Enter confirm New Password");
     }
 
-    if(!validator.isStrongPassword(newPassword)){
+    if (!validator.isStrongPassword(newPassword)) {
         throw new Error("Enter a strong password");
     }
 
-    if(newPassword  !== confirmNewPassword){
+    if (newPassword !== confirmNewPassword) {
         throw new Error("New password and Confirm new password should same");
     }
 
     return true;
 }
 
-const forgotPasswordValidation = (req)=>{
-    const {email} = req.body || {};
-    if(!email){
+const forgotPasswordValidation = (req) => {
+    const { email } = req.body || {};
+    if (!email) {
         throw new Error("Enter your email first");
     }
 
     return true;
 }
+
+const resetPasswordValidation = (req) => {
+    const { otp, newPassword } = req.body || {};
+
+    if (!otp) {
+        throw new Error("Enter OTP");
+    }
+    if (!newPassword) {
+        throw new Error("Enter New Password");
+    } else if (!validator.isStrongPassword(newPassword)) {
+        throw new Error("Enter strong password");
+    }
+    return true;
+}
+
 module.exports = {
     sendMessageValidation,
     deleteMessageValidation,
@@ -181,4 +196,5 @@ module.exports = {
     updateProfileValidation,
     updatePasswordValidation,
     forgotPasswordValidation,
+    resetPasswordValidation,
 }

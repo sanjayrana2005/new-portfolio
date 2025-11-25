@@ -1,4 +1,4 @@
-const { signupUserValidattion, loginUserValidation, updateProfileValidation, updatePasswordValidation, forgotPasswordValidation } = require('../middleware/validation');
+const { signupUserValidattion, loginUserValidation, updateProfileValidation, updatePasswordValidation, forgotPasswordValidation, resetPasswordValidation } = require('../middleware/validation');
 const userModel = require('../models/userSchema');
 const cloudinary = require('../utils/cloudinary');
 const bcrypt = require("bcrypt");
@@ -258,7 +258,6 @@ const updatePasswordController = async (req, res) => {
     }
 }
 
-
 const getUserForPortfolioController = async (req, res) => {
     try {
         const _id = "692556c4150c21ba8018866b";
@@ -304,6 +303,50 @@ const forgotPasswordController = async (req, res) => {
         })
     }
 }
+
+const resetPasswordController = async (req,res)=>{
+    try {
+        resetPasswordValidation(req);
+        const email = req.params.email;
+        const {otp,newPassword}=req.body;
+        const user = await userModel.findOne({email});
+        if(!user){
+            return res.status(404).json({
+                message:"User not found"
+            })
+        }
+
+        if(user.resetPasswordToken !== otp){
+            return res.status(404).json({
+                message:"Invalid OTP"
+            })
+        }
+
+        if(Date.now() > user.resetPasswordExpire){
+            return res.status(400).json({
+                message:"OTP expired"
+            })
+        }
+
+        user.newPassword = await bcrypt.hash(newPassword,10);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save();
+
+        res.status(200).json({
+            message:"Password reset success"
+        })
+        
+    } catch (error) {
+        res.json({
+            message:error.message
+        })
+    }
+}
+
+
+
 module.exports = {
     signupUserController,
     loginController,
@@ -312,5 +355,6 @@ module.exports = {
     updateProfilecontroller,
     updatePasswordController,
     getUserForPortfolioController,
-    forgotPasswordController
+    forgotPasswordController,
+    resetPasswordController
 }
