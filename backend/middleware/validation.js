@@ -133,14 +133,13 @@ const updateProfileValidation = (req) => {
         }
     }
 
-    if (data.gitHubURL && !validator.isURL(gitHubURL.trim())) {
+    if (data.gitHubURL && !validator.isURL(data.gitHubURL.trim())) {
         throw new Error("Invalid github URL");
-    } else if (data.linkedInURL && !validator(linkedInURL.trim())) {
+    } else if (data.linkedInURL && !validator.isURL(data.linkedInURL.trim())) {
         throw new Error("Invalid linkedIn URL");
     }
     return true;
 }
-
 
 module.exports = {
     sendMessageValidation,
