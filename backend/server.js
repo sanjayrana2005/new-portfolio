@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const timeLineRouter = require("./routes/timeLineRoute");
 const softwareRouter = require("./routes/softwareRoute");
 const skillRouter = require("./routes/skillsRoute");
+const projectRouter = require("./routes/projectRoutes");
 
 const app = express();
 require("dotenv").config();
@@ -27,6 +28,7 @@ app.use("/",userRouter);
 app.use("/",timeLineRouter);
 app.use("/",softwareRouter);
 app.use("/",skillRouter);
+app.use("/",projectRouter);
 
 
 connectDB()

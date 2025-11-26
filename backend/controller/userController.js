@@ -220,7 +220,8 @@ const updateProfilecontroller = async (req, res) => {
             linkedInURL,
             ...(avatarData && { avatar: avatarData }),
             ...(resumeData && { resume: resumeData })
-        }, { new: true })
+        }, { new: true });
+
         res.status(200).json({
             message: "Profile updated",
             updatedUser

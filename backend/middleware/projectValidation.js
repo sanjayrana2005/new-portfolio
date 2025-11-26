@@ -1,0 +1,92 @@
+const validation = require("validator");
+
+const addProjectValidation = (req) => {
+    const { title, description, gitRepoLink, projectLink, technologies, stack, deployed } = req.body || {};
+    const { projectImage } = req.files || {};
+
+    if (!title) {
+        throw new Error("Enter title");
+    } else if (title.trim().length > 20) {
+        throw new Error("Title should below 20 characters");
+    }
+
+    if (!description) {
+        throw new Error("Enter description");
+    } else if (description.trim().length > 500) {
+        throw new Error("Title should below 50 characters");
+    }
+
+    if (!gitRepoLink) {
+        throw new Error("Enter gitRepo link");
+    } else if (!validation.isURL(gitRepoLink.trim())) {
+        throw new Error("Invalid gitRepo link");
+    }
+
+    if (!projectLink) {
+        throw new Error("Enter project link");
+    } else if (!validation.isURL(projectLink.trim())) {
+        throw new Error("Invalid project link");
+    }
+
+    if (!technologies) {
+        throw new Error("Enter technologies");
+    }
+
+    if (!stack) {
+        throw new Error("Enter stack");
+    } else if (stack.trim().length > 10) {
+        throw new Error("Stack should below 10 characters");
+    }
+
+    if (!deployed) {
+        throw new Error("Select Deployed");
+    } else if (!validation.isBoolean(deployed.toString())) {
+        throw new Error("Invalid Deployed type");
+    }
+
+    if (!req.files || !projectImage) {
+        throw new Error("Upload project preview image");
+    }
+
+    return true;
+}
+
+const updateProjectValidation = (req) => {
+    const data = req.body || {};
+    const ALLOWED_UPDATES = ["title", "description", "gitRepoLink", "projectLink", "technologies", "stack", "deployed", "projectImage"]
+
+    const isValid = Object.keys(data).every((field) => ALLOWED_UPDATES.includes(field));
+    if (!isValid) {
+        throw new Error("Invalid update request");
+    }
+
+    if (data.title && title.trim().length > 20) {
+        throw new Error("Title should below 20 characters");
+    }
+
+    if (data.description && description.trim().length > 500) {
+        throw new Error("Title should below 50 characters");
+    }
+
+    if (data.gitRepoLink && !validation.isURL(gitRepoLink.trim())) {
+        throw new Error("Invalid gitRepo link");
+    }
+
+    if (data.projectLink && !validation.isURL(projectLink.trim())) {
+        throw new Error("Invalid project link");
+    }
+
+    if (data.stack && data.stack.trim().length > 10) {
+        throw new Error("Stack should below 10 characters");
+    }
+
+    if (data.deployed && !validation.isBoolean(deployed.toString())) {
+        throw new Error("Invalid Deployed type");
+    }
+    return true;
+}
+
+module.exports = {
+    addProjectValidation,
+    updateProjectValidation
+}

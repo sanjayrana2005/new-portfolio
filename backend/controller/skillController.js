@@ -14,7 +14,7 @@ const addSkillController = async (req, res) => {
             });
 
         if (!cloudinaryResponse || cloudinaryResponse.error) {
-            return res.status(500).json({
+            return res.status(400).json({
                 message: cloudinaryResponse?.error?.message || "Image upload failed",
             });
         }
@@ -38,6 +38,7 @@ const addSkillController = async (req, res) => {
         });
     }
 }
+
 const deleteSkillController = async (req, res) => {
     try {
         const { _id } = req.params;
@@ -90,6 +91,7 @@ const updateSkillController = async (req, res) => {
         });
     }
 }
+
 const getAllSkillController = async (req, res) => {
     try {
         const skills = await skillModel.find();
