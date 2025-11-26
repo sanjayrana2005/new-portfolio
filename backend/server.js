@@ -8,12 +8,19 @@ const timeLineRouter = require("./routes/timeLineRoute");
 const softwareRouter = require("./routes/softwareRoute");
 const skillRouter = require("./routes/skillsRoute");
 const projectRouter = require("./routes/projectRoutes");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-require("dotenv").config();
-app.use(cookieParser());
 
-app.use(express.json());                                                        
+app.use(
+    cors({
+        origin:[process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+        methods:["GET","POST","DELETE","PATCH","PUT"],
+        credentials:true
+    }));
+app.use(cookieParser());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
     fileUpload({
@@ -23,12 +30,12 @@ app.use(
 );
 
 
-app.use("/",messageRouter);
-app.use("/",userRouter);
-app.use("/",timeLineRouter);
-app.use("/",softwareRouter);
-app.use("/",skillRouter);
-app.use("/",projectRouter);
+app.use("/", messageRouter);
+app.use("/", userRouter);
+app.use("/", timeLineRouter);
+app.use("/", softwareRouter);
+app.use("/", skillRouter);
+app.use("/", projectRouter);
 
 
 connectDB()
@@ -38,6 +45,6 @@ connectDB()
             console.log(`Server running at port ${process.env.PORT}!!`);
         });
     })
-    .catch((error)=>{
+    .catch((error) => {
         console.log("Database can not connected!!")
-    })
+    });
