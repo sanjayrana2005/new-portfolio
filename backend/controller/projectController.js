@@ -146,9 +146,30 @@ const deleteProjectController = async (req,res)=>{
     }
 }
 
+const getSingleProjectController = async (req,res)=>{
+    try {
+        const _id = req.params._id;
+        const singlePtoject = await projectModel.findById(_id);
+        if(!singlePtoject){
+            return res.status(400).json({
+                message:"Project not found"
+            })
+        }
+        
+        res.status(200).json({
+            singlePtoject
+        })
+    } catch (error) {
+        res.status(400).json({
+            message:error.message
+        })
+    }
+}
+
 module.exports = {
     addProjectController,
     updateProjectController,
     getAllProjectController,
-    deleteProjectController
+    deleteProjectController,
+    getSingleProjectController
 }
