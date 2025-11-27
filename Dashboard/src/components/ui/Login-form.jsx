@@ -14,6 +14,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { clearAllUserErrors, login } from "../../store/userSlice"
 import { toast } from "react-toastify"
+import SpecialLoadingButton from "../../pages/Sub-components/SpecialLoadingButton"
 
 export const LoginForm = (  className,
   ...props)=>{
@@ -75,9 +76,12 @@ export const LoginForm = (  className,
                 required />
               </Field>
               <Field>
-                <Button 
+              {
+                loading ? <SpecialLoadingButton content="Logging In"/> :<Button 
                 onClick={handlelogin}
                 className="cursor-pointer" type="submit">Login</Button>
+              }
+                
               </Field>
             </FieldGroup>
           </form>

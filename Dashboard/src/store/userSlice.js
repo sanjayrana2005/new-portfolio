@@ -31,6 +31,40 @@ const userSlice = createSlice({
             state.user = {};
             state.error = action.payload;
         },
+
+        loadUserRequest(state, action) {
+            state.loading = true;
+            state.isAuthenticated = false;
+            state.user = {};
+            state.error = null;
+        },
+        loadUserSuccess(state, action) {
+            state.loading = false;
+            state.isAuthenticated = true;
+            state.user = action.payload;
+            state.message = action.payload;
+            state.error = null;
+        },
+        loadUserFailed(state, action) {
+            state.loading = false;
+            state.isAuthenticated = false;
+            state.user = {};
+            state.error = action.payload;
+        },
+
+        logoutUserSuccess(state, action) {
+            state.loading = false;
+            state.isAuthenticated = false;
+            state.user = {};
+            state.message = action.payload;
+            state.error = null;
+        },
+        logoutUserFailed(state, action) {
+            state.loading = false;
+            state.isAuthenticated = state.isAuthenticated;
+            state.user = state.isAuthenticated;
+            state.error = action.payload;
+        },
         clearAllErrors(state,payload){
             state.error=null;
             state.user=state.user
@@ -55,9 +89,36 @@ export const login = (email, password) => async (dispatch) => {
         dispatch(userSlice.actions.loginFailed(error.response.data.message))
     }
 }
+export const getUser = ()=> async (dispatch) => {
+    dispatch(userSlice.actions.loadUserRequest());
+    try {
+        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/me`,
+            {
+                withCredentials: true
+            });
+            dispatch(userSlice.actions.loadUserSuccess(data.user));
+            dispatch(userSlice.actions.clearAllErrors());
+            dispatch(userSlice.actions.loadUserSuccess(data.message))
+    } catch (error) {
+        dispatch(userSlice.actions.loadUserFailed(error.response.data.message))
+    }
+}
+
+export const logoutUser = ()=> async (dispatch) => {
+    try {
+        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/logout`,
+            {
+                withCredentials: true
+            });
+            dispatch(userSlice.actions.clearAllErrors());
+            dispatch(userSlice.actions.logoutUserSuccess(data.message));
+    } catch (error) {
+        dispatch(userSlice.actions.logoutUserFailed(error.response.data.message))
+    }
+}
 
 export const clearAllUserErrors = () => (dispatch)=> {
-    dispatch(userSlice.actions.clearAllErrors())
+    dispatch(userSlice.actions.clearAllErrors());
 }
 
 export default userSlice.reducer

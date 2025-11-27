@@ -1,9 +1,10 @@
 import React from 'react'
+import SpecialLoadingButton from './Sub-components/SpecialLoadingButton'
 
 function HomePage() {
   return (
     <div>
-      homw
+      <SpecialLoadingButton content="loading"/>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route,BrowserRouter, Routes } from 'react-router-dom';
 import ForgotPasswod from './pages/ForgotPasswod';
 import PasswordReset from './pages/PasswordReset';
@@ -7,16 +7,25 @@ import ManageTimeLine from './pages/ManageTimeLine';
 import ManageProjects from './pages/ManageProjects';
 import ViewProjects from './pages/ViewProjects';
 import UpdateProjects from './pages/UpdateProjects';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import Login from './pages/Login';
 import PasswordUpdate from './pages/PasswordUpdate';
+import { useDispatch } from 'react-redux';
+import { getUser } from './store/userSlice';
+import HomePage from './pages/HomePage';
 
 
 const App = () => {
+  const disapatch = useDispatch();
+  useEffect(()=>{
+    disapatch(getUser());
+  },[]);
+
+ 
   return (
    <BrowserRouter>
      <Routes>
-        <Route path='/' element={<h1>hii</h1>}/>
+        <Route path='/' element={<HomePage/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/password/update' element={<PasswordUpdate/>}/>
         <Route path='/password/forgot' element={<ForgotPasswod/>}/>
