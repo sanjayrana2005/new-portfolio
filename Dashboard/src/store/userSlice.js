@@ -65,9 +65,52 @@ const userSlice = createSlice({
             state.user = state.isAuthenticated;
             state.error = action.payload;
         },
-        clearAllErrors(state,payload){
-            state.error=null;
-            state.user=state.user
+        updatePasswordRequest(state, action) {
+            state.loading = true;
+            state.isUpdated = false;
+            state.message = null;
+            state.error = null;
+        },
+        updatePasswordSuccess(state, action) {
+            state.loading = false;
+            state.isUpdated = true;
+            state.message = action.payload;
+            state.error = null;
+        },
+        updatePasswordFailed(state, action) {
+            state.loading = false;
+            state.isUpdated = false;
+            state.message = null;
+            state.error = action.payload;
+            state.user = action.payload;
+        },
+        updateProfileRequest(state, action) {
+            state.loading = true;
+            state.isUpdated = false;
+            state.message = null;
+            state.error = null;
+        },
+        updateProfileSuccess(state, action) {
+            state.loading = false;
+            state.isUpdated = true;
+            state.message = action.payload;
+            state.error = null;
+        },
+        updateProfileFailed(state, action) {
+            state.loading = false;
+            state.isUpdated = false;
+            state.message = null;
+            state.error = action.payload;
+            state.user = action.payload;
+        },
+        updateProfileResetAfterUpdate(state, action) {
+            state.error = null;
+            state.isUpdated = null;
+            state.message = null;
+        },
+        clearAllErrors(state, payload) {
+            state.error = null;
+            state.user = state.user
         }
     },
 });
@@ -82,42 +125,78 @@ export const login = (email, password) => async (dispatch) => {
                     "Content-Type": "application/json"
                 }
             });
-            dispatch(userSlice.actions.loginSuccess(data.user));
-            dispatch(userSlice.actions.clearAllErrors());
-            dispatch(userSlice.actions.loginSuccess(data.message))
+        dispatch(userSlice.actions.loginSuccess(data.user));
+        dispatch(userSlice.actions.clearAllErrors());
+        dispatch(userSlice.actions.loginSuccess(data.message))
     } catch (error) {
         dispatch(userSlice.actions.loginFailed(error.response.data.message))
     }
 }
-export const getUser = ()=> async (dispatch) => {
+
+export const getUser = () => async (dispatch) => {
     dispatch(userSlice.actions.loadUserRequest());
     try {
         const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/me`,
             {
                 withCredentials: true
             });
-            dispatch(userSlice.actions.loadUserSuccess(data.user));
-            dispatch(userSlice.actions.clearAllErrors());
-            dispatch(userSlice.actions.loadUserSuccess(data.message))
+        dispatch(userSlice.actions.loadUserSuccess(data.user));
+        dispatch(userSlice.actions.clearAllErrors());
+        dispatch(userSlice.actions.loadUserSuccess(data.message))
     } catch (error) {
         dispatch(userSlice.actions.loadUserFailed(error.response.data.message))
     }
 }
 
-export const logoutUser = ()=> async (dispatch) => {
+export const logoutUser = () => async (dispatch) => {
     try {
         const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/logout`,
             {
                 withCredentials: true
             });
-            dispatch(userSlice.actions.clearAllErrors());
-            dispatch(userSlice.actions.logoutUserSuccess(data.message));
+        dispatch(userSlice.actions.clearAllErrors());
+        dispatch(userSlice.actions.logoutUserSuccess(data.message));
     } catch (error) {
         dispatch(userSlice.actions.logoutUserFailed(error.response.data.message))
     }
 }
 
-export const clearAllUserErrors = () => (dispatch)=> {
+export const updatePassword = (currentPassword, newPassword, confirmNewPassword) => async (dispatch) => {
+    dispatch(userSlice.actions.updatePasswordRequest());
+    try {
+        const { data } = await axios.patch(`${process.env.VITE_BACKEND_BASE_URL}/update-password`, { currentPassword, newPassword, confirmNewPassword }, {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        dispatch(userSlice.actions.updatePasswordSuccess(data.message));
+        dispatch(userSlice.actions.clearAllErrors());
+    } catch (error) {
+        dispatch(userSlice.actions.updatePasswordFailed(error.response.data.message));
+    }
+}
+
+export const updateProfile = (data) => async(dispatch) => {
+    dispatch(userSlice.actions.updateProfileRequest());
+    try {
+        const {data}=await axios.patch(`${process.env.VITE_BACKEND_BASE_URL}/update-profile`,{data},{
+            withCredentials:true,
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        });
+        dispatch(userSlice.actions.updateProfileSuccess(data.message));
+    } catch (error) {
+        dispatch(userSlice.actions.updateProfileFailed(error.response.data.message));
+    }
+}
+
+export const resetProfile = () => (dispatch) => {
+    dispatch(userSlice.actions.clearAllErrors.updateProfileResetAfterUpdate());
+}
+
+export const clearAllUserErrors = () => (dispatch) => {
     dispatch(userSlice.actions.clearAllErrors());
 }
 
