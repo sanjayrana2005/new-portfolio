@@ -49,7 +49,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.isAuthenticated = false;
             state.user = {};
-            state.error = action.payload;
+            state.error = null;
         },
 
         logoutUserSuccess(state, action) {

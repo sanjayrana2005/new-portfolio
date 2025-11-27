@@ -43,7 +43,6 @@ const forgotPasswordSlice = createSlice({
 
         clearAllErrors(state, action) {
             state.error = null;
-            state = state
         }
     }
 });
@@ -51,13 +50,13 @@ const forgotPasswordSlice = createSlice({
 export const forgotPassword = (email) => async (dispatch) => {
     dispatch(forgotPasswordSlice.actions.forgotPasswordRequest());
     try {
-        const { data } = await axios.post(`${import.meta.process.env.VITE_BACKEND_BASE_URL}/forgot-password`, { email }, {
+        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/forgot-password`, { email }, {
             withCredentials: true, headers: {
                 "content-Type": "application/json"
             }
         })
         dispatch(forgotPasswordSlice.actions.forgotPasswordSuccess(data.message));
-        dispatch(forgotPasswordSlice.actions.clearAllErrors())
+        dispatch(forgotPasswordSlice.actions.clearAllErrors());
     } catch (error) {
         dispatch(forgotPasswordSlice.actions.forgotPasswordFailed(error.response.data.message));
     }
@@ -79,7 +78,7 @@ export const resetPassword = (email,otp,newPassword) => async (dispatch) => {
 }
 
 export const clearAllForgotPasswordErrors = () => (dispatch) => {
-    dispatch(forgotPassword.actions.clearAllErrors());
+    dispatch(forgotPasswordSlice.actions.clearAllErrors());
 }
 
 export default forgotPasswordSlice.reducer

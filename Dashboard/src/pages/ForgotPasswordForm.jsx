@@ -11,31 +11,34 @@ import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { clearAllUserErrors, login } from "../../store/userSlice"
 import { toast } from "react-toastify"
-import SpecialLoadingButton from "../../pages/Sub-components/SpecialLoadingButton"
+import { clearAllForgotPasswordErrors, forgotPassword } from "../store/forgotPasswordSlice"
+import SpecialLoadingButton from "./Sub-components/SpecialLoadingButton"
 
-export const LoginForm = (  className,
+export const ForgotPasswordForm = (  className,
   ...props)=>{
     const [email,setEmail]=useState("sanjayrana5113@gmail.com");
-    const [password,setPassword]=useState("Sanjay@123");
-    const {loading,isAuthenticated,error,message}=useSelector(state=>state.user);
+    const {loading,error,message}=useSelector(state=>state.forgotPassword);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handlelogin = (e) => {
         e.preventDefault();
-        dispatch(login(email,password))
+        dispatch(forgotPassword(email));
     }
-    useEffect(()=>{
-        if(error){
-            toast.error(error);
-            dispatch(clearAllUserErrors());
-        }
-        if(isAuthenticated){
-            toast.success(message)
-            navigate("/");
-        }
-    },[dispatch,isAuthenticated,error,loading])
+useEffect(() => {
+
+  if (error) {
+    toast.error(error);
+    dispatch(clearAllForgotPasswordErrors());
+  }
+
+  if (message) {
+    toast.success(message);
+    navigate("/password/reset");
+  }
+
+}, [error, message, dispatch, navigate]);
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -43,10 +46,7 @@ export const LoginForm = (  className,
           <form className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-xl sm:text-2xl font-bold">Welcome back Sanjay</h1>
-                <p className="text-muted-foreground text-balance">
-                  Login to your portfolio
-                </p>
+                <h1 className="text-xl sm:text-2xl font-bold">Forgot Password</h1>
               </div>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -59,26 +59,10 @@ export const LoginForm = (  className,
                 />
               </Field>
               <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <Link
-                    to="/password/forgot"
-                    className="ml-auto text-sm underline-offset-2 hover:underline"
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
-                <Input 
-                type="password" 
-                value={password}
-                onChange={(e)=>setPassword(e.target.value)}
-                required />
-              </Field>
-              <Field>
               {
-                loading ? <SpecialLoadingButton content="Logging In"/> :<Button 
+                loading ? <SpecialLoadingButton content="Sending OTP"/> :<Button 
                 onClick={handlelogin}
-                className="cursor-pointer" type="submit">Login</Button>
+                className="cursor-pointer" type="submit">Send OTP</Button>
               }
                 
               </Field>
