@@ -109,10 +109,10 @@ const loginController = async (req, res) => {
 
         const token = generateToken(ExistUser);
         res.cookie("portfolioToken", token, {
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
             httpOnly: true,
             secure: true,
             sameSite: "none",
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
 
         res.status(200).json({

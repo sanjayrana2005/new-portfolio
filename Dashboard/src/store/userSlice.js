@@ -22,6 +22,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.isAuthenticated = true;
             state.user = action.payload;
+            state.message = action.payload;
             state.error = null;
         },
         loginFailed(state, action) {
@@ -40,7 +41,7 @@ const userSlice = createSlice({
 export const login = (email, password) => async (dispatch) => {
     dispatch(userSlice.actions.loginRequest());
     try {
-        const { data } = await axios.post("",
+        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/login`,
             { email, password },
             {
                 withCredentials: true, headers: {
@@ -49,9 +50,14 @@ export const login = (email, password) => async (dispatch) => {
             });
             dispatch(userSlice.actions.loginSuccess(data.user));
             dispatch(userSlice.actions.clearAllErrors());
+            dispatch(userSlice.actions.loginSuccess(data.message))
     } catch (error) {
         dispatch(userSlice.actions.loginFailed(error.response.data.message))
     }
+}
+
+export const clearAllUserErrors = () => (dispatch)=> {
+    dispatch(userSlice.actions.clearAllErrors())
 }
 
 export default userSlice.reducer
