@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Router, Routes } from 'react-router-dom';
+import { Route,BrowserRouter, Routes } from 'react-router-dom';
 import ForgotPasswod from './pages/ForgotPasswod';
 import PasswordReset from './pages/PasswordReset';
 import ManageSkills from './pages/ManageSkills';
@@ -8,13 +8,15 @@ import ManageProjects from './pages/ManageProjects';
 import ViewProjects from './pages/ViewProjects';
 import UpdateProjects from './pages/UpdateProjects';
 import { ToastContainer } from 'react-toastify';
+import Login from './pages/Login';
+
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
+   <BrowserRouter>
+     <Routes>
         <Route path='/'/>
-        <Route path='/login'/>
+        <Route path='/login' element={<Login/>}/>
         <Route path='/password/update' element={<ForgotPasswod/>}/>
         <Route path='/password/reset' element={<PasswordReset/>}/>
         <Route path='/manage/skills' element={<ManageSkills/>}/>
@@ -22,9 +24,9 @@ const App = () => {
         <Route path='/manage/projects' element={<ManageProjects />}/>
         <Route path='/view/projects/:id' element={<ViewProjects/>}/>
         <Route path='/update/project/:id' element={<UpdateProjects/>}/>
-      </Routes> 
+    </Routes>
       <ToastContainer position='top-center' theme='dark'/>
-    </Router>
+   </BrowserRouter>
   )
 }
 
