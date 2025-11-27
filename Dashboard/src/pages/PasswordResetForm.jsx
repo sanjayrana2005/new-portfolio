@@ -8,35 +8,36 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useNavigate } from "react-router-dom"
+import {useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
-import { clearAllForgotPasswordErrors, forgotPassword } from "../store/forgotPasswordSlice"
+import { clearAllForgotPasswordErrors, resetPassword } from "../store/forgotPasswordSlice"
 import SpecialLoadingButton from "./Sub-components/SpecialLoadingButton"
 
-export const ForgotPasswordForm = () => {
-  const [email, setEmail] = useState("sanjayrana5113@gmail.com");
-  const { loading, error, message } = useSelector(state => state.forgotPassword);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handForgotPassword = (e) => {
-    e.preventDefault();
-    dispatch(forgotPassword(email));
+export const PasswordResetForm = ( {email})=>{
+    const [otp,setOtp]=useState("");
+    const [newPassword,setNewPassword]=useState("");
+    const {loading,error,message}=useSelector(state=>state.forgotPassword);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const handResetPassword = (e) => {
+        e.preventDefault();
+        dispatch(resetPassword(email,otp,newPassword));
+    }
+useEffect(() => {
+  if (error) {
+    toast.error(error);
+    dispatch(clearAllForgotPasswordErrors());
   }
-  useEffect(() => {
 
-    if (error) {
-      toast.error(error);
-      dispatch(clearAllForgotPasswordErrors());
-    }
-    if (message) {
-      toast.success(message);
-      navigate("/password/reset",{ state: { email } });
-    }
+  if (message) {
+    toast.success(message);
+    navigate("/");
+  }
 
-  }, [error,message, dispatch, navigate]);
+}, [error, message, dispatch, navigate]);
 
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -45,25 +46,32 @@ export const ForgotPasswordForm = () => {
           <form className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-xl sm:text-2xl font-bold">Forgot Password</h1>
+                <h1 className="text-xl sm:text-2xl font-bold">Reset Password</h1>
               </div>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">OTP</FieldLabel>
                 <Input
-                  type="email"
-                  placeholder="m@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  value={otp}
+                  onChange={(e)=>setOtp(e.target.value)}
+                  required
+                />
+
+                <FieldLabel htmlFor="email">New Password</FieldLabel>
+                <Input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e)=>setNewPassword(e.target.value)}
                   required
                 />
               </Field>
               <Field>
-                {
-                  loading ? <SpecialLoadingButton content="Sending OTP" /> : <Button
-                    onClick={handForgotPassword}
-                    className="cursor-pointer" type="submit">Send OTP</Button>
-                }
-
+              {
+                loading ? <SpecialLoadingButton content="Reseting Password..."/> :<Button 
+                onClick={handResetPassword}
+                className="cursor-pointer" type="submit">Reset Password</Button>
+              }
+                
               </Field>
             </FieldGroup>
           </form>

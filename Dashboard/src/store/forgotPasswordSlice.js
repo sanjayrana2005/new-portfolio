@@ -65,15 +65,15 @@ export const forgotPassword = (email) => async (dispatch) => {
 export const resetPassword = (email,otp,newPassword) => async (dispatch) => {
     dispatch(forgotPasswordSlice.actions.resetPasswordRequest());
     try {
-        const { data } = await axios.post(`${import.meta.process.env.VITE_BACKEND_BASE_URL}/${email}`, { otp,newPassword }, {
+        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/reset-password/${email}`, { otp,newPassword }, {
             withCredentials: true, headers: {
                 "content-Type": "application/json"
             }
-        })
+        });
         dispatch(forgotPasswordSlice.actions.resetPasswordSuccess(data.message));
         dispatch(forgotPasswordSlice.actions.clearAllErrors())
     } catch (error) {
-        dispatch(forgotPasswordSlice.actions.resetPasswordFailed(error.response.data.message));
+        dispatch(forgotPasswordSlice.actions.resetPasswordFailed(error.response?.data?.message));
     }
 }
 

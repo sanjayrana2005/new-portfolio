@@ -12,6 +12,6 @@ userRouter.patch("/update-profile",authUser,updateProfilecontroller);
 userRouter.patch("/update-password",authUser,updatePasswordController);
 userRouter.get("/get-user",getUserForPortfolioController);
 userRouter.post("/forgot-password",forgotPasswordController);
-userRouter.post("/reset-password/:email",authUser,resetPasswordController);
+userRouter.post("/reset-password/:email",resetPasswordController);
 
 module.exports = userRouter;
