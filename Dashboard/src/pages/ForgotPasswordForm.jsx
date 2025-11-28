@@ -18,25 +18,28 @@ import SpecialLoadingButton from "./Sub-components/SpecialLoadingButton"
 export const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("sanjayrana5113@gmail.com");
   const { loading, error, message } = useSelector(state => state.forgotPassword);
+  const {isAuthenticated}=useSelector((state)=>state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handForgotPassword = (e) => {
     e.preventDefault();
     dispatch(forgotPassword(email));
-
   }
   useEffect(() => {
 
     if (error) {
       toast.error(error);
       dispatch(clearAllForgotPasswordErrors());
+    }   
+    if(isAuthenticated){
+      navigate("/")
     }
-    if (message) {
-      toast.success(message);
-      navigate("/password/reset",{ state: { email } });
+    if(message !== null){
+       toast.success(message);
+        navigate("/password/reset",{ state: { email } });
     }
-
-  }, [error,message, dispatch, navigate]);
+    
+  }, [error,isAuthenticated, dispatch, loading]);
 
   return (
     <div className={cn("flex flex-col gap-6")}>

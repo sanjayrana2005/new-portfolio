@@ -14,41 +14,31 @@ const userSlice = createSlice({
     reducers: {
         loginRequest(state, action) {
             state.loading = true;
-            state.isAuthenticated = false;
-            state.user = {};
             state.error = null;
         },
         loginSuccess(state, action) {
             state.loading = false;
             state.isAuthenticated = true;
-            state.user = action.payload;
-            state.message = action.payload;
+            state.user = action.payload.user;
+            state.message = action.payload.message;
             state.error = null;
         },
         loginFailed(state, action) {
             state.loading = false;
-            state.isAuthenticated = false;
-            state.user = {};
             state.error = action.payload;
         },
 
         loadUserRequest(state, action) {
-            state.loading = true;
-            state.isAuthenticated = false;
-            state.user = {};
-            state.error = null;
+            state.loading = true;       
         },
         loadUserSuccess(state, action) {
             state.loading = false;
             state.isAuthenticated = true;
             state.user = action.payload;
-            state.message = action.payload;
             state.error = null;
         },
         loadUserFailed(state, action) {
             state.loading = false;
-            state.isAuthenticated = false;
-            state.user = {};
             state.error = null;
         },
 
@@ -56,13 +46,10 @@ const userSlice = createSlice({
             state.loading = false;
             state.isAuthenticated = false;
             state.user = {};
-            state.message = action.payload;
-            state.error = null;
+            state.message = action.payload; 
         },
         logoutUserFailed(state, action) {
             state.loading = false;
-            state.isAuthenticated = state.isAuthenticated;
-            state.user = state.isAuthenticated;
             state.error = action.payload;
         },
         updatePasswordRequest(state, action) {
@@ -82,7 +69,6 @@ const userSlice = createSlice({
             state.isUpdated = false;
             state.message = null;
             state.error = action.payload;
-            state.user = action.payload;
         },
         updateProfileRequest(state, action) {
             state.loading = true;
@@ -93,7 +79,8 @@ const userSlice = createSlice({
         updateProfileSuccess(state, action) {
             state.loading = false;
             state.isUpdated = true;
-            state.message = action.payload;
+            state.user = action.payload.user;
+            state.message = action.payload.message;
             state.error = null;
         },
         updateProfileFailed(state, action) {
@@ -101,7 +88,6 @@ const userSlice = createSlice({
             state.isUpdated = false;
             state.message = null;
             state.error = action.payload;
-            state.user = action.payload;
         },
         updateProfileResetAfterUpdate(state, action) {
             state.error = null;
@@ -110,7 +96,6 @@ const userSlice = createSlice({
         },
         clearAllErrors(state, payload) {
             state.error = null;
-            state.user = state.user
         }
     },
 });
@@ -125,9 +110,11 @@ export const login = (email, password) => async (dispatch) => {
                     "Content-Type": "application/json"
                 }
             });
-        dispatch(userSlice.actions.loginSuccess(data.user));
+        dispatch(userSlice.actions.loginSuccess({
+           user: data.user,
+           message:data.message
+        }));
         dispatch(userSlice.actions.clearAllErrors());
-        dispatch(userSlice.actions.loginSuccess(data.message))
     } catch (error) {
         dispatch(userSlice.actions.loginFailed(error.response.data.message))
     }
@@ -142,7 +129,6 @@ export const getUser = () => async (dispatch) => {
             });
         dispatch(userSlice.actions.loadUserSuccess(data.user));
         dispatch(userSlice.actions.clearAllErrors());
-        dispatch(userSlice.actions.loadUserSuccess(data.message))
     } catch (error) {
         dispatch(userSlice.actions.loadUserFailed(error.response.data.message))
     }
@@ -186,7 +172,10 @@ export const updateProfile = (data) => async(dispatch) => {
                 "Content-Type":"multipart/form-data"
             }
         });
-        dispatch(userSlice.actions.updateProfileSuccess(data.message));
+        dispatch(userSlice.actions.updateProfileSuccess({
+            user:data.updatedUser,
+            message:data.message
+        }));
     } catch (error) {
         dispatch(userSlice.actions.updateProfileFailed(error.response.data.message));
     }

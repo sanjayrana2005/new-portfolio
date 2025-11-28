@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { act } from "react";
 
 const forgotPasswordSlice = createSlice({
     name: "forgotPassword",
     initialState: {
         loading: false,
         error: null,
-        message: null
+        message: null,
+        isAuthenticated:false
     },
     reducers: {
         forgotPasswordRequest(state, action) {
@@ -33,6 +35,7 @@ const forgotPasswordSlice = createSlice({
         resetPasswordSuccess(state, action) {
             state.loading = false;
             state.error = false;
+            state.isAuthenticated=true;
             state.message = action.payload;
         },
         resetPasswordFailed(state, action) {
