@@ -17,9 +17,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import Dashboard from './Sub-components/Dashboard'
+import AddProject from './Sub-components/AddProject'
+import AddSkill from './Sub-components/AddSkill'
+import AddApplication from './Sub-components/AddApplication'
+import AddTimeline from './Sub-components/AddTimeline'
+import Messages from './Sub-components/Messages'
+import Account from './Sub-components/Account'
 
 function HomePage() {
-  const [active, setActive] = useState("")
+  const [active, setActive] = useState("Dashboard")
   const { isAuthenticated, message, error, user } = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
@@ -180,76 +187,108 @@ function HomePage() {
 
           <SheetContent side="left" className="sm:max-w-xs">
             <nav className='grid gap-6 text-lg font-medium'>
-              
-              <Link href="#" className={`mt-15 flex items-center gap-4 px-2.5 ${active === "Dashboard" ? "text-foreground":"text-muted-foreground hover:text-foreground"}`}
-              onClick={()=>setActive("Dashboard")}
+
+              <Link href="#" className={`mt-15 flex items-center gap-4 px-2.5 ${active === "Dashboard" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                onClick={() => setActive("Dashboard")}
               >
-              <Home className='h-5 w-5'/>
-              Dashboard
+                <Home className='h-5 w-5' />
+                Dashboard
               </Link>
 
-              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Project" ? "text-foreground":"text-muted-foreground hover:text-foreground"}`}
-              onClick={()=>setActive("Add Project")}
+              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Project" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                onClick={() => setActive("Add Project")}
               >
-              <FolderGit className='h-5 w-5'/>
-              Add Project
+                <FolderGit className='h-5 w-5' />
+                Add Project
               </Link>
 
-              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Skill" ? "text-foreground":"text-muted-foreground hover:text-foreground"}`}
-              onClick={()=>setActive("Add Skill")}
+              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Skill" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                onClick={() => setActive("Add Skill")}
               >
-              <PencilRuler className='h-5 w-5'/>
-              Add Skill
+                <PencilRuler className='h-5 w-5' />
+                Add Skill
               </Link>
 
-              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Application" ? "text-foreground":"text-muted-foreground hover:text-foreground"}`}
-              onClick={()=>setActive("Add Application")}
+              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Application" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                onClick={() => setActive("Add Application")}
               >
-              <LayoutGrid className='h-5 w-5'/>
-              Add Application
+                <LayoutGrid className='h-5 w-5' />
+                Add Application
               </Link>
 
-              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Account" ? "text-foreground":"text-muted-foreground hover:text-foreground"}`}
-              onClick={()=>setActive("Account")}
+              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Account" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                onClick={() => setActive("Account")}
               >
-              <User className='h-5 w-5'/>
-              Account
+                <User className='h-5 w-5' />
+                Account
               </Link>
 
-              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Timeline" ? "text-foreground":"text-muted-foreground hover:text-foreground"}`}
-              onClick={()=>setActive("Add Timeline")}
+              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Add Timeline" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                onClick={() => setActive("Add Timeline")}
               >
-              <History className='h-5 w-5'/>
-              Add Timeline
+                <History className='h-5 w-5' />
+                Add Timeline
               </Link>
 
-              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Messages" ? "text-foreground":"text-muted-foreground hover:text-foreground"}`}
-              onClick={()=>setActive("Messages")}
+              <Link href="#" className={`flex items-center gap-4 px-2.5 ${active === "Messages" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                onClick={() => setActive("Messages")}
               >
-              <MessageSquareMore className='h-5 w-5'/>
-              Messages
+                <MessageSquareMore className='h-5 w-5' />
+                Messages
               </Link>
 
               <Link className={`flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground`}
-              onClick={handleLogout}
+                onClick={handleLogout}
               >
-              <LogOut className='h-5 w-5'/>
-              Logout
+                <LogOut className='h-5 w-5' />
+                Logout
               </Link>
             </nav>
           </SheetContent>
         </Sheet>
 
         <div className='flex items-center gap-4 md:grow-0 sm:ml-16 sm:mt-5'>
-            <img 
-            src={user && user.avatar?.url} alt="avatar" 
+          <img
+            src={user && user.avatar?.url} alt="avatar"
             className='w-18 h-18 rounded-full max-[900px]:hidden'
-            />
-            <h1 className='text-xl max-[900px]:text-lg'>
-              Welcome back, {user?.fullName}
-            </h1>
+          />
+          <h1 className='text-xl max-[900px]:text-lg'>
+            Welcome back, {user?.fullName}
+          </h1>
         </div>
       </header>
+
+      {
+        (() => {
+          switch (active) {
+            case "Dashboard":
+              return <Dashboard />
+              break;
+            case "Add Project":
+              return <AddProject />
+              break;
+            case "Add Skill":
+              return <AddSkill />
+              break;
+            case "Add Application":
+              return <AddApplication />
+              break;
+            case "Add Timeline":
+              return <AddTimeline />
+              break;
+            case "Messages":
+              return <Messages />
+              break;
+            case "Account":
+              return <Account />
+              break;
+
+            default:
+              return <Dashboard />
+              break;
+          }
+        })()
+      }
     </div>
   )
 }

@@ -85,8 +85,6 @@ const userSlice = createSlice({
         },
         updateProfileFailed(state, action) {
             state.loading = false;
-            state.isUpdated = false;
-            state.message = null;
             state.error = action.payload;
         },
         updateProfileResetAfterUpdate(state, action) {
@@ -163,10 +161,10 @@ export const updatePassword = (currentPassword, newPassword, confirmNewPassword)
     }
 }
 
-export const updateProfile = (data) => async(dispatch) => {
+export const updateProfile = (newData) => async(dispatch) => {
     dispatch(userSlice.actions.updateProfileRequest());
     try {
-        const {data}=await axios.patch(`${import.meta.process.env.VITE_BACKEND_BASE_URL}/update-profile`,{data},{
+        const {data}=await axios.patch(`${import.meta.env.VITE_BACKEND_BASE_URL}/update-profile`,newData,{
             withCredentials:true,
             headers:{
                 "Content-Type":"multipart/form-data"
@@ -177,12 +175,12 @@ export const updateProfile = (data) => async(dispatch) => {
             message:data.message
         }));
     } catch (error) {
-        dispatch(userSlice.actions.updateProfileFailed(error.response.data.message));
+        dispatch(userSlice.actions.updateProfileFailed(error?.response?.data?.message));
     }
 }
 
 export const resetProfile = () => (dispatch) => {
-    dispatch(userSlice.actions.clearAllErrors.updateProfileResetAfterUpdate());
+    dispatch(userSlice.actions.updateProfileResetAfterUpdate());
 }
 
 export const clearAllUserErrors = () => (dispatch) => {

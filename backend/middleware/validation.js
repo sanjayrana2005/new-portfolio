@@ -104,12 +104,21 @@ const loginUserValidation = (req) => {
 
 const updateProfileValidation = (req) => {
     const ALLOWED_UPDATES = ["fullName", "phone", "aboutMe", "avatar", "resume", "gitHubURL", "linkedInURL"];
-    const data = req.body || {};
-    const isValid = Object.keys(data).every((field) => ALLOWED_UPDATES.includes(field));
+
+     const bodyKeys = Object.keys(req.body || {});
+    const fileKeys = req.files ? Object.keys(req.files) : [];
+
+    const updates = [...bodyKeys, ...fileKeys];
+
+    const isValid = updates.every(field => ALLOWED_UPDATES.includes(field));
 
     if (!isValid) {
         throw new Error("Invalid update request");
     }
+
+    // ✅ FIELD VALIDATIONS
+
+    const data = req.body;
 
     if (data.fullName) {
         if (data.fullName.trim().length < 2) {

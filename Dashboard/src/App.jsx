@@ -13,7 +13,7 @@ import PasswordUpdate from './pages/PasswordUpdate';
 import { useDispatch } from 'react-redux';
 import { getUser } from './store/userSlice';
 import HomePage from './pages/HomePage';
-
+import "./App.css"
 
 const App = () => {
   const disapatch = useDispatch();
