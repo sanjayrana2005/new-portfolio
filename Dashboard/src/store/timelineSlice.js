@@ -48,9 +48,9 @@ const timelineSlice = createSlice({
         },
 
         resetTimelineSlice(state, action) {
-            state.error = null,
-                state.message = null,
-                state.loading = null
+            state.error = null;
+            state.message = null;
+            state.loading = null;
         },
 
         clearAllTimelineError(state, action) {
@@ -85,13 +85,13 @@ export const deleteTimeline = (_id) => async (dispatch) => {
     }
 }
 
-export const addTimeline = (title,description,from,to) => async (dispatch) => {
+export const addTimeline = (title, description, from, to) => async (dispatch) => {
     dispatch(timelineSlice.actions.addTimelineRequest())
     try {
-        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/timeline/add`,{title,description,from,to}, {
+        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/timeline/add`, { title, description, from, to }, {
             withCredentials: true,
-            headers:{
-                "content-Type":"application/json"
+            headers: {
+                "Content-Type": "application/json"
             }
         });
         dispatch(timelineSlice.actions.addTimelineSuccess({

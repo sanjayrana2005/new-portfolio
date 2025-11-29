@@ -19,7 +19,7 @@ const addSkillController = async (req, res) => {
             });
         }
 
-        const addSkill = await skillModel.create({
+        const addedSkill = await skillModel.create({
             title,
             proficiency,
             svg: {
@@ -30,7 +30,7 @@ const addSkillController = async (req, res) => {
 
         res.status(200).json({
             message: "Skill added",
-            addSkill
+            addedSkill
         });
     } catch (error) {
         res.status(400).json({
