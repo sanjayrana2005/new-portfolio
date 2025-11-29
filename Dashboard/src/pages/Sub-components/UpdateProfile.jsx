@@ -135,14 +135,18 @@ const UpdateProfile = () => {
                     <div className='flex gap-2 sm:gap-10 flex-col sm:flex-row'>
                         <div className='grid gap-2 '>
                             <label>Github URL</label>
-                            <Input value={gitHubURL}
+                            <Input 
+                            value={gitHubURL}
+                            placeholder="Your GitHub URL"
                                 onChange={(e) => setGitHubURL(e.target.value)}
                                 className='border-gray-400'
                             />
                         </div>
                         <div className='grid gap-2 '>
                             <label>Linkedin URL</label>
-                            <Input value={linkedInURL}
+                            <Input 
+                            value={linkedInURL}
+                            placeholder="Your Linkedin URL"
                                 onChange={(e) => setLinkedInURL(e.target.value)}
                                 className='border-gray-400'
                             />

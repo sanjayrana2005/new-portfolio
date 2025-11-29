@@ -148,7 +148,7 @@ export const logoutUser = () => async (dispatch) => {
 export const updatePassword = (currentPassword, newPassword, confirmNewPassword) => async (dispatch) => {
     dispatch(userSlice.actions.updatePasswordRequest());
     try {
-        const { data } = await axios.patch(`${import.meta.process.env.VITE_BACKEND_BASE_URL}/update-password`, { currentPassword, newPassword, confirmNewPassword }, {
+        const { data } = await axios.patch(`${import.meta.env.VITE_BACKEND_BASE_URL}/update-password`, { currentPassword, newPassword, confirmNewPassword }, {
             withCredentials: true,
             headers: {
                 "Content-Type": "application/json"

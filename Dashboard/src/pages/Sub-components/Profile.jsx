@@ -34,17 +34,17 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className='flex gap-2 sm:gap-10 flex-col sm:flex-row justify-between'>
-                        <div className='grid gap-2'>
+                        <div className='grid gap-2 cursor-not-allowed '>
                             <label>Full Name</label>
-                            <Input type="text" defaultValue={user.fullName} disabled className="border-gray-400" />
+                            <Input type="text" defaultValue={user.fullName} disabled className="border-gray-400 " />
                         </div>
-                        <div className='grid gap-2 '>
+                        <div className='grid gap-2 cursor-not-allowed '>
                             <label>Email</label>
                             <Input type="email" defaultValue={user.email} disabled
                                 className="border-gray-400"
                             />
                         </div>
-                        <div className='grid gap-2 '>
+                        <div className='grid gap-2 cursor-not-allowed '>
                             <label>Phone</label>
                             <Input type="text" defaultValue={user.phone} disabled
                                 className="border-gray-400"
@@ -59,13 +59,13 @@ const Profile = () => {
                         />
                     </div>
                     <div className='flex gap-2 sm:gap-10 flex-col sm:flex-row'>
-                        <div className='grid gap-2 '>
+                        <div className='grid gap-2 cursor-not-allowed '>
                             <label>Github URL</label>
                             <Input value={user.gitHubURL} disabled
                                 className='border-gray-400'
                             />
                         </div>
-                        <div className='grid gap-2 '>
+                        <div className='grid gap-2 cursor-not-allowed '>
                             <label>Linkedin URL</label>
                             <Input value={user.linkedInURL} disabled
                                 className='border-gray-400'
