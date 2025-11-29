@@ -15,36 +15,33 @@ import { Button } from "@/components/ui/button"
 import { getUser } from '../../store/userSlice'
 import { clearAllMessagesSliceError, deleteMessage, getAllMessages, resetMessageSlice } from '../../store/messageSlice'
 import SpecialLoadingButton from './SpecialLoadingButton'
-import {toast}from "react-toastify"
+import { toast } from "react-toastify"
 
 
 const Messages = () => {
-  const navigate = useNavigate();
-  const { error, messages,loading,toastMessage } = useSelector((state) => state.messagesStore);
+  const { error, messages, loading, toastMessage } = useSelector((state) => state.messagesStore);
   const dispatch = useDispatch()
-  const [messageId,setMessageId]=useState()
-
-  // const [messageId, setMessageId] = useState("")
+  const [messageId, setMessageId] = useState("")
   const handleDeleteMessage = (_id) => {
     dispatch(deleteMessage(_id));
     setMessageId(_id)
   }
   useEffect(() => {
     dispatch(getUser());
-            dispatch(getAllMessages())
+    dispatch(getAllMessages())
   }, [])
 
-  useEffect(()=>{
-    if(error){
+  useEffect(() => {
+    if (error) {
       toast.error(error)
       dispatch(clearAllMessagesSliceError())
     }
-    if(toastMessage){
+    if (toastMessage) {
       toast.success(toastMessage);
       dispatch(resetMessageSlice());
       dispatch(getAllMessages());
     }
-  },[dispatch,error,messages,loading])
+  }, [dispatch, error, messages, loading])
 
   return (<>
     <div className='min-h-[100vh] sm:gap-4 p-3 sm:pl-20'>
@@ -75,7 +72,7 @@ const Messages = () => {
                       </CardDescription>
                       <CardFooter className="justify-end">
                         {
-                          loading && messageId === message._id ? <SpecialLoadingButton content="Deleting.." width={"w-32"} /> : <Button className="cursor-pointer w-32" onClick={()=>handleDeleteMessage(message._id)}>Delete</Button>
+                          loading && messageId === message._id ? <SpecialLoadingButton content="Deleting.." width={"w-32"} /> : <Button className="cursor-pointer w-32" onClick={() => handleDeleteMessage(message._id)}>Delete</Button>
                         }
                       </CardFooter>
                     </Card>

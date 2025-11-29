@@ -2,12 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice"
 import ForgotPasswodReducer from "./forgotPasswordSlice";
 import messageReducer from "./messageSlice";
-
+import timelineReducer from "./timelineSlice"
 
 export const store = configureStore({
     reducer:{
         user:userReducer,
         forgotPassword:ForgotPasswodReducer,
         messagesStore:messageReducer,
+        timeline:timelineReducer,
     }
 })
