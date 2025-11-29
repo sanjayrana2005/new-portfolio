@@ -11,7 +11,7 @@ const AddApplication = () => {
   const [name, setName] = useState("");
   const [svg, setSvg] = useState("");
   const [svgPreview, setSvgPreview] = useState("");
-  const {loading,error,message} = useSelector((state)=>state.application)
+  const { loading, error, message } = useSelector((state) => state.application)
 
   const dispatch = useDispatch();
 
@@ -28,20 +28,20 @@ const AddApplication = () => {
   }
 
   const formData = new FormData();
-  formData.append("name",name);
-  formData.append("svg",svg);
+  formData.append("name", name);
+  formData.append("svg", svg);
 
   const handleAddApplication = (e) => {
     e.preventDefault();
     dispatch(addApplication(formData))
   }
 
-  useEffect(()=>{
-    if(error){
+  useEffect(() => {
+    if (error) {
       toast.error(error);
       dispatch(clearAllApplicationSliceErrors());
     }
-    if(message){
+    if (message) {
       toast.success(message);
       dispatch(resetApplicationSliceError());
       dispatch(getAllApplication());
@@ -49,13 +49,13 @@ const AddApplication = () => {
       setSvg("")
       setSvgPreview("")
     }
-  },[error,dispatch,loading])
+  }, [error, dispatch, loading])
   return (
     <div className='flex justify-center min-h-[100vh] sm:gap-4 sm:py-4 sm:pl-20'>
       <form className='w-full px-5 md:w-[650px]'>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>
-            <h2 className='font-medium leading-7 text-gray-900 text-3xl text-center'>Add a new Application</h2>
+            <h2 className='font-medium leading-7 text-gray-900 text-3xl text-center'>Add a new Software</h2>
             <div className='mt-10 flex flex-col gap-5'>
               <div className='w-full sm:col-span-4'>
                 <label className='block text-sm font-medium left-6 text-gray-900'>
@@ -120,7 +120,7 @@ const AddApplication = () => {
 
           <div className='w-full flex justify-center'>
             {
-              loading ? <SpecialLoadingButton content={"Adding.."} width={"w-full sm:w-1/2"} /> : <Button type="submit" className="w-full sm:w-1/2 cursor-pointer" onClick={handleAddApplication}>Add Skill</Button>
+              loading ? <SpecialLoadingButton content={"Adding.."} width={"w-full sm:w-1/2"} /> : <Button type="submit" className="w-full sm:w-1/2 cursor-pointer" onClick={handleAddApplication}>Add Software</Button>
             }
           </div>
         </div>
