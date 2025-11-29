@@ -62,9 +62,7 @@ const skillSlice = createSlice({
 export const getAllSkills = () => async (dispatch) => {
     dispatch(skillSlice.actions.getAllSlillsRequest());
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/get-skill`, {
-            withCredentials: true
-        });
+        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/get-skill`);
         dispatch(skillSlice.actions.getAllSlillsSuccess(data.skills));
         dispatch(skillSlice.actions.clearSkillErrors());
     } catch (error) {
@@ -96,6 +94,17 @@ export const addSkill = (title, proficiency, svg) => async (dispatch) => {
     }
 }
 
+export const deleteSkill = (_id) => async (dispatch)=>{
+    dispatch(skillSlice.actions.deleteSkillRequest());
+    try {
+        const {data}= await axios.delete(`${import.meta.env.VITE_BACKEND_BASE_URL}/skill-delete/${_id}`,{withCredentials:true});
+        dispatch(skillSlice.actions.deleteSkillSuccess(data.message));
+        dispatch(skillSlice.actions.clearSkillErrors());
+    } catch (error) {
+        dispatch(skillSlice.actions.deleteSkillFailed(error.response.data.message));
+    }
+}
+
 export const clearAllSkillSliceErrors = () => (dispatch) => {
     dispatch(skillSlice.actions.clearSkillErrors())
 }
@@ -103,5 +112,7 @@ export const clearAllSkillSliceErrors = () => (dispatch) => {
 export const resetSkillSliceErrors = () => (dispatch) => {
     dispatch(skillSlice.actions.resetSkillSlice())
 }
+
+
 
 export default skillSlice.reducer

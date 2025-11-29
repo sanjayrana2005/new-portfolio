@@ -4,8 +4,8 @@ import { addSkill, clearAllSkillSliceErrors, getAllSkills, resetSkillSliceErrors
 import { toast } from 'react-toastify';
 import { Input } from "@/components/ui/input"
 import SpecialLoadingButton from './SpecialLoadingButton';
-import { Button } from "@/components/ui/button"
-import { ImagePlus, PhoneOutgoingIcon } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { ImagePlus} from 'lucide-react';
 
 const AddSkill = () => {
   const [title, setTitle] = useState("");
@@ -31,9 +31,6 @@ const AddSkill = () => {
   const handleAddSkill = (e) => {
     e.preventDefault();
     dispatch(addSkill(title, proficiency, svg));
-    setTitle("");
-    setProficiency("");
-    setSvgPreview("");
   }
 
   useEffect(() => {
@@ -43,14 +40,18 @@ const AddSkill = () => {
     }
     if (message) {
       toast.success(message);
-      dispatch(resetSkillSliceErrors())
-      dispatch(getAllSkills())
+      dispatch(resetSkillSliceErrors());
+      dispatch(getAllSkills());
+      setTitle("");
+      setProficiency("");
+      setSvg("")
+      setSvgPreview("");
     }
   }, [dispatch, loading, error]);
 
   return (
     <div className='flex justify-center min-h-[100vh] sm:gap-4 sm:py-4 sm:pl-20'>
-      <form className='w-[100%] px-5 md:w-[650px]'>
+      <form className='w-full px-5 md:w-[650px]'>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>
             <h2 className='font-medium leading-7 text-gray-900 text-3xl text-center'>Add a new skill</h2>
@@ -86,9 +87,6 @@ const AddSkill = () => {
                   </div>
                 </div>
               </div>
-
-
-
 
               <div className="col-span-full">
                 <label

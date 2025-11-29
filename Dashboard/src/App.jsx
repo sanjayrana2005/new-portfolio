@@ -17,6 +17,7 @@ import "./App.css"
 import { getAllMessages } from './store/messageSlice';
 import { getAllTimeline } from './store/timelineSlice';
 import { getAllSkills } from './store/skillSlice';
+import { getAllApplication } from './store/applicationSlice';
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
     disapatch(getAllMessages());
     disapatch(getAllTimeline());
     disapatch(getAllSkills());
+    disapatch(getAllApplication());
   }, []);
 
 

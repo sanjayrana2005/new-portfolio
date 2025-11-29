@@ -86,8 +86,8 @@ function HomePage() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link className={`flex h-9 w-9 items-center justify-center rounded-lg ${active === "Add Skills" ? "text-accent-foreground bg-accent" : "text-muted-foreground"} transition-colors hover:text-foreground md:h-8 md:w-8`}
-                  onClick={() => setActive("Add Skills")}
+                <Link className={`flex h-9 w-9 items-center justify-center rounded-lg ${active === "Add Skill" ? "text-accent-foreground bg-accent" : "text-muted-foreground"} transition-colors hover:text-foreground md:h-8 md:w-8`}
+                  onClick={() => setActive("Add Skill")}
                 >
 
                   <PencilRuler className='w-5 h-5 ' />
@@ -247,10 +247,10 @@ function HomePage() {
           </SheetContent>
         </Sheet>
 
-        <div className='flex items-center gap-4 md:grow-0 sm:ml-16 sm:mt-5'>
+        <div className='flex items-center gap-4 md:grow-0 sm:ml-30 sm:mt-5'>
           <img
             src={user && user.avatar?.url} alt="avatar"
-            className='w-18 h-18 rounded-full max-[900px]:hidden'
+            className='w-18 h-18 rounded-full max-[650px]:hidden'
           />
           <h1 className='text-xl max-[900px]:text-lg'>
             Welcome back, {user?.fullName}
