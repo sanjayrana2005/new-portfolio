@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -21,11 +20,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Progress } from "@/components/ui/progress"
 
 const Dashboard = () => {
-  const { user } = useSelector(state => state.user)
-  const { projects } = useSelector(state => state.project)
-  const { skills } = useSelector(state => state.skill)
+  const { user } = useSelector(state => state.user);
+  const { projects } = useSelector(state => state.project);
+  const { skills } = useSelector(state => state.skill);
+  const { applications } = useSelector(state => state.application);
+  const { timeline } = useSelector(state => state.timeline);
   return (
     <>
       <div className='flex flex-col sm:gap-4 sm:py-4 sm:pl-14'>
@@ -108,17 +110,21 @@ const Dashboard = () => {
                                   <div className='font-semibold'>{project.title}</div>
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell">{project.stack}</TableCell>
-                                <TableCell className="hidden md:table-cell">{project.deployed ? "Yes":"No"}</TableCell>
+                                <TableCell className="hidden md:table-cell">{project.deployed ? "Yes" : "No"}</TableCell>
                                 <TableCell><Link to={`/update/project/${project._id}`}>
-                                  <Button className="cursor-pointer">Update</Button>
+                                  <Button className="cursor-pointer px-1 sm:px-3">Update</Button>
                                 </Link></TableCell>
-                                <TableCell className="text-right"><Link to={project.projectLink ? project.projectLink:""}>
-                                  <Button className="cursor-pointer">Visit</Button>
+                                <TableCell className="text-right"><Link to={project.projectLink ? project.projectLink : ""}>
+                                  <Button className="cursor-pointer px-1.5 sm:px-3">Visit</Button>
                                 </Link></TableCell>
                               </TableRow>
                             )
                           })
-                        ) : ("")
+                        ) : <TableRow>
+                          <TableCell className="text-3xl overflow-y-hidden">
+                            You have not added any project
+                          </TableCell>
+                        </TableRow>
                       }
                       </TableBody>
                     </Table>
@@ -126,9 +132,119 @@ const Dashboard = () => {
                 </Card>
               </TabsContent>
             </Tabs>
+
+
+            <Tabs defaultValue="skills">
+              <TabsContent value="skills">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>
+                      Skills
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid sm:grid-cols-3 gap-4">
+                    {
+                      skills && skills.length > 0 ? (
+                        skills.map((skill) => {
+                          return (
+                            <Card key={skill._id}>
+                              <CardHeader>
+                                {skill.title}
+                              </CardHeader>
+                              <CardFooter>
+                                <Progress value={skill.proficiency} />
+                              </CardFooter>
+                            </Card>
+                          )
+                        })
+                      ) : <TableRow>
+                        <TableCell className="text-3xl overflow-y-hidden">
+                          You have not added any project
+                        </TableCell>
+                      </TableRow>
+                    }
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+
+            <Tabs defaultValue="software">
+              <TabsContent className="grid min-[1050px]:grid-cols-2 gap-4" value="software">
+                <Card>
+                  <CardHeader className="px-7">
+                    <CardTitle>Software Application</CardTitle>
+                    <CardContent>
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>
+                              Name
+                            </TableHead>
+                            <TableHead className="md:table-cell">
+                              Icon
+                            </TableHead>
+                            <TableHead className="md:table-cell">
+                              Action
+                            </TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {
+                            applications && applications.length > 0 ? (
+                              applications.map((application) => {
+                                return (
+                                  <TableRow className="bg-accent" key={application._id}>
+                                    <TableCell>{application.name}</TableCell>
+                                    <TableCell>
+                                      <img src={application.svg && application.svg.url}
+                                        alt={application.name}
+                                        className='w-7 h-7'
+                                      /></TableCell>
+                                    <TableCell>
+                                      <Button className="cursor-pointer">Delete</Button>
+                                    </TableCell>
+                                  </TableRow>
+                                )
+                              })
+                            ) : <TableRow>
+                              <TableCell className="text-3xl overflow-hidden">
+                                You not added any software
+                              </TableCell>
+                            </TableRow>
+                          }
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                  </CardHeader>
+                </Card>
+
+                <Card>
+                  <CardHeader className="px-7 flex items-center justify-between flex-row">
+                    <CardTitle>Timeline</CardTitle>
+                    <Link to={"/manage/timeline"}>
+                      <Button className="cursor-pointer">Manage Timeline</Button>
+                    </Link>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableHead>Title</TableHead>
+                        <TableHead>From</TableHead>
+                        <TableHead>To</TableHead>
+                      </TableHeader>
+                      <TableBody>
+                        {
+                          timeline && timeline.length > 0 ? "" : ""
+                        }
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
           </div>
-        </main>
-      </div>
+        </main >
+      </div >
     </>
   )
 }
