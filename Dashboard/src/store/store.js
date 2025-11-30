@@ -15,6 +15,6 @@ export const store = configureStore({
         timeline:timelineReducer,
         skill:skillReducer,
         application:applicationReducer,
-        project:applicationReducer
+        project:projectReducer
     }
 })

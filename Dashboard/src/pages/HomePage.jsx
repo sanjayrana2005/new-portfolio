@@ -72,7 +72,7 @@ function HomePage() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link className={`flex h-9 w-9 items-center justify-center rounded-lg ${active === "Add Project" ? "text-accent-foreground bg-accent" : "text-muted-foreground"} transition-colors hover:text-foreground md:h-8 md:w-8`}
-                  onClick={() => setActive("Add project")}
+                  onClick={() => setActive("Add Project")}
                 >
 
                   <FolderGit className='w-5 h-5 ' />

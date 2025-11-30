@@ -45,7 +45,7 @@ const addProjectValidation = (req) => {
     }
 
     if (!req.files || !projectImage) {
-        throw new Error("Upload project preview image");
+        throw new Error("Upload project preview image Required");
     }
 
     return true;
