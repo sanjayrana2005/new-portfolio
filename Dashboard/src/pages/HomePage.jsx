@@ -247,7 +247,7 @@ function HomePage() {
           </SheetContent>
         </Sheet>
 
-        <div className='flex items-center gap-4 md:grow-0 sm:ml-30 sm:mt-5'>
+        <div className='flex items-center gap-4 md:grow-0 sm:ml-15 sm:mt-5'>
           <img
             src={user && user.avatar?.url} alt="avatar"
             className='w-18 h-18 rounded-full max-[650px]:hidden'

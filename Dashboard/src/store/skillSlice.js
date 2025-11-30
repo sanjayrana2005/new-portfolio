@@ -94,10 +94,10 @@ export const addSkill = (title, proficiency, svg) => async (dispatch) => {
     }
 }
 
-export const deleteSkill = (_id) => async (dispatch)=>{
+export const deleteSkill = (_id) => async (dispatch) => {
     dispatch(skillSlice.actions.deleteSkillRequest());
     try {
-        const {data}= await axios.delete(`${import.meta.env.VITE_BACKEND_BASE_URL}/skill-delete/${_id}`,{withCredentials:true});
+        const { data } = await axios.delete(`${import.meta.env.VITE_BACKEND_BASE_URL}/skill-delete/${_id}`, { withCredentials: true });
         dispatch(skillSlice.actions.deleteSkillSuccess(data.message));
         dispatch(skillSlice.actions.clearSkillErrors());
     } catch (error) {

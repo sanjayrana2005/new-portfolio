@@ -75,8 +75,6 @@ export const getAllProjects = () => async (dispatch) => {
     }
 }
 
-
-
 export const addProject = (formData) => async (dispatch) => {
     dispatch(projectSlice.actions.addProjectsRequest());
     try {
@@ -93,6 +91,19 @@ export const addProject = (formData) => async (dispatch) => {
         dispatch(projectSlice.actions.clearAllProjectErrors());
     } catch (error) {
         dispatch(projectSlice.actions.addProjectsFailed(error.response?.data?.message));
+    }
+}
+
+export const deleteProject = (id) => async (dispatch) => {
+    dispatch(projectSlice.actions.deleteProjectRequest());
+    try {
+        const {data} = await axios.delete(`${import.meta.env.VITE_BACKEND_BASE_URL}/delete-project/${id}`,{
+            withCredentials:true,
+        });
+        dispatch(projectSlice.actions.deleteProjectSuccess(data.message));
+        dispatch(projectSlice.actions.clearAllProjectErrors());
+    } catch (error) {
+       dispatch(projectSlice.actions.deleteProjectFailed(error.response?.data?.message)) 
     }
 }
 
