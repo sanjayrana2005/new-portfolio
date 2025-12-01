@@ -28,6 +28,8 @@ const Dashboard = () => {
   const { skills } = useSelector(state => state.skill);
   const { applications } = useSelector(state => state.application);
   const { timeline } = useSelector(state => state.timeline);
+  console.log(timeline);
+  
   return (
     <>
       <div className='flex flex-col sm:gap-4 sm:py-4 sm:pl-14'>
