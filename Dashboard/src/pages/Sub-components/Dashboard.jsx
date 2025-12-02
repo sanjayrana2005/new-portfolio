@@ -10,11 +10,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent} from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
