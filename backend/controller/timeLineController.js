@@ -49,7 +49,7 @@ const deleteTimeLineController = async (req, res) => {
 }
 const getAllTimeLineController = async (req, res) => {
     try {
-        const timeline = await timeLineModel.find();
+        const timeline = await timeLineModel.find().sort({ createdAt: -1 });
         res.status(200).json({
             timeline
         })

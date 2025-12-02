@@ -39,8 +39,8 @@ const AddTimeline = () => {
   }, [error, dispatch, loading])
 
   return (
-    <div className='flex justify-center min-h-[100vh] sm:gap-4 sm:py-4 sm:pl-20'>
-      <form className='w-[100%] px-5 md:w-[650px]'>
+    <div className='flex justify-center min-h-screen sm:gap-4 sm:py-4 sm:pl-20'>
+      <form className='w-full px-5 md:w-[650px]'>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>
             <h2 className='font-medium leading-7 text-gray-900 text-3xl text-center'>Add a new time line</h2>

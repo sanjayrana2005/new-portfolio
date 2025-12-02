@@ -93,7 +93,7 @@ export const addApplication = (formData) => async (dispatch) => {
 export const deleteApplication = (_id) => async (dispatch) => {
     dispatch(applicationSlice.actions.deleteApplicationRequest());
     try {
-        const { data } = await axios.delete(`${import.meta.env.VITE_BACKEND_BASE_URL}/${_id}`, {
+        const { data } = await axios.delete(`${import.meta.env.VITE_BACKEND_BASE_URL}/software-delete/${_id}`, {
             withCredentials: true
         });
         dispatch(applicationSlice.actions.deleteApplicationSuccess(data.message));

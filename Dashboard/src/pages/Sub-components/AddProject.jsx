@@ -77,7 +77,7 @@ const AddProject = () => {
   }, [dispatch, error, loading])
 
   return (
-    <div className='flex justify-center min-h-[100vh] sm:gap-4 sm:py-4 sm:pl-20'>
+    <div className='flex justify-center min-h-screen sm:gap-4 sm:py-4 sm:pl-20'>
       <form className='w-full px-5 md:w-[650px]'>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -21,14 +21,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress"
+import { clearAllApplicationSliceErrors, deleteApplication, getAllApplication, resetApplicationSliceError } from '../../store/applicationSlice';
+import { toast } from 'react-toastify';
+import SpecialLoadingButton from './SpecialLoadingButton';
 
 const Dashboard = () => {
   const { user } = useSelector(state => state.user);
   const { projects } = useSelector(state => state.project);
   const { skills } = useSelector(state => state.skill);
-  const { applications } = useSelector(state => state.application);
+  const { applications,error,message,loading } = useSelector(state => state.application);
   const { timeline } = useSelector(state => state.timeline);
-  console.log(timeline);
+
+  const dispatch=useDispatch()
+  const [appId,setAppId]=useState("")
+  const handleDeleteSoftwareApplication = (_id) => {
+    setAppId(_id)
+    dispatch(deleteApplication(_id))
+  }
+
+  useEffect(()=>{
+    if(error){
+      toast.error(error);
+      dispatch(clearAllApplicationSliceErrors());
+    }
+    if(message){
+      toast.success(message);
+      dispatch(resetApplicationSliceError());
+      dispatch(getAllApplication())
+    }
+  },[dispatch,loading,message,error])
   
   return (
     <>
@@ -203,14 +224,17 @@ const Dashboard = () => {
                                         className='w-7 h-7'
                                       /></TableCell>
                                     <TableCell>
-                                      <Button className="cursor-pointer">Delete</Button>
+                                    {
+                                      loading && appId === application._id ? <SpecialLoadingButton content={"deleting..."}/> : <Button onClick={() => handleDeleteSoftwareApplication(application._id)} className="cursor-pointer">Delete</Button>
+                                    }
+                                      
                                     </TableCell>
                                   </TableRow>
                                 )
                               })
                             ) : <TableRow>
-                              <TableCell className="text-3xl overflow-hidden">
-                                You not added any software
+                              <TableCell className="text-md sm:text-3xl overflow-hidden">
+                                No software added
                               </TableCell>
                             </TableRow>
                           }
@@ -232,17 +256,25 @@ const Dashboard = () => {
                       <TableHeader>
                         <TableHead>Title</TableHead>
                         <TableHead>From</TableHead>
-                        <TableHead>To</TableHead>
+                        <TableHead className="text-right">To</TableHead>
                       </TableHeader>
                       <TableBody>
                         {
                           timeline && timeline.length > 0 ? (
                             timeline.map((timeli)=>{
-                              return <TableRow key={timeli._id}>
-
-                              </TableRow>
+                              return (<TableRow key={timeli._id} className="bg-accent">
+                                  <TableCell className="font-medium">
+                                    {timeli.title}
+                                  </TableCell>
+                                  <TableCell className="md:table-cell">{timeli.timeline.from}</TableCell>
+                                  <TableCell className="md:table-cell text-right">{timeli.timeline.to ? timeli.timeline.to : "Present" }</TableCell>
+                              </TableRow>)
                             })
-                          ) : ""
+                          ) : <TableRow>
+                            <TableCell className="text-3xl overflow-hidden">
+                              You have not added any timeline
+                            </TableCell>
+                          </TableRow>
                         }
                       </TableBody>
                     </Table>
