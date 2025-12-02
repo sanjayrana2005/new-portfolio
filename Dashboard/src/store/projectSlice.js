@@ -37,6 +37,18 @@ const projectSlice = createSlice({
             state.error = action.payload;
         },
 
+        updateProjectRequest(state, action) {
+            state.loading = true;
+        },
+        updateProjectSuccess(state, action) {
+            state.loading = false;
+            state.message = action.payload;
+        },
+        updateProjectFailed(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
 
         addProjectsRequest(state, action) {
             state.loading = true;
@@ -104,6 +116,22 @@ export const deleteProject = (id) => async (dispatch) => {
         dispatch(projectSlice.actions.clearAllProjectErrors());
     } catch (error) {
        dispatch(projectSlice.actions.deleteProjectFailed(error.response?.data?.message)) 
+    }
+}
+
+export const updateProject = (id,data) => async (dispatch) => {
+    dispatch(projectSlice.actions.updateProjectRequest());
+    try {
+        const {data}=await axios.patch(`${import.meta.env.VITE_BACKEND_BASE_URL}/update-project/${id}`,data,{
+            withCredentials:true,
+            headers:{
+                "Content-Type" : "multipart/form-data"
+            }
+        });
+        dispatch(projectSlice.actions.updateProjectSuccess(data.message));
+        dispatch(projectSlice.actions.clearAllProjectErrors());
+    } catch (error) {
+        dispatch(projectSlice.actions.updateProjectFailed(error.response?.data?.message));
     }
 }
 
