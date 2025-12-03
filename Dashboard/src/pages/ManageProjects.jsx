@@ -129,7 +129,7 @@ const ManageProjects = () => {
                               <Tooltip>
                                 <TooltipTrigger asChild>
                             <button onClick={()=>handleDeleteProject(project._id)} className="border-red-600 border-2 rounded-full h-8 w-8 flex justify-center items-center text-red-600 hover:text-slate-50 hover:bg-red-600 cursor-pointer" >
-                            <Eye className='h-5 w-5'/>
+                            <Trash2 className='h-5 w-5'/>
                             </button>
                                 </TooltipTrigger>
                                 <TooltipContent side="bottom">
