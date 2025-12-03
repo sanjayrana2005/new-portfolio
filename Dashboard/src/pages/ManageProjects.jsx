@@ -4,7 +4,7 @@ import { clearAllProjectSliceError, deleteProject, getAllProjects, resetProjectS
 import { toast } from 'react-toastify';
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Eye, Trash2 } from "lucide-react"
+import { Eye, Pen, Trash2 } from "lucide-react"
 import {
   Card,
   CardContent,
@@ -67,10 +67,10 @@ const ManageProjects = () => {
                     <TableHead>
                       Title
                     </TableHead>
-                    <TableHead>
+                    <TableHead className="hidden md:table-cell">
                       Stack
                     </TableHead>
-                    <TableHead>
+                    <TableHead className="hidden md:table-cell">
                       Deployed
                     </TableHead>
                     <TableHead>
@@ -92,7 +92,7 @@ const ManageProjects = () => {
                           </TableCell>
                           <TableCell className="font-medium">{project.title}</TableCell>
                           <TableCell className="hidden md:table-cell">{project.stack}</TableCell>
-                          <TableCell className="hidden md:table-cell">{project.deployed}</TableCell>
+                          <TableCell className="hidden md:table-cell">{project.deployed === true ? "Yes":"No  "}</TableCell>
                           <TableCell className="flex flex-row items-center gap-3 h-24">
                             <TooltipProvider>
                               <Tooltip>
@@ -106,6 +106,34 @@ const ManageProjects = () => {
                                 </TooltipTrigger>
                                 <TooltipContent side="bottom">
                                   View
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Link to={`/update/project/${project._id}`}>
+                            <button onClick={() => handleDeleteTimeline(timeli._id)} className="border-yellow-400 border-2 rounded-full h-8 w-8 flex justify-center items-center text-yellow-400 hover:text-slate-950 hover:bg-ywllow-400 cursor-pointer">
+                            <Pen className='h-5 w-5'/>
+                            </button>
+                                  </Link>
+
+                                </TooltipTrigger>
+                                <TooltipContent side="bottom">
+                                 Edit
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                            <button onClick={()=>handleDeleteProject(project._id)} className="border-red-600 border-2 rounded-full h-8 w-8 flex justify-center items-center text-red-600 hover:text-slate-50 hover:bg-red-600 cursor-pointer" >
+                            <Eye className='h-5 w-5'/>
+                            </button>
+                                </TooltipTrigger>
+                                <TooltipContent side="bottom">
+                                  Delete
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
