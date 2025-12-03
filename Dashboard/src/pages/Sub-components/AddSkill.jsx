@@ -63,7 +63,7 @@ const AddSkill = () => {
                 <div className='mt-2'>
                   <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600'>
                     <Input
-                      type="text" placeholder="Matriculation"
+                      type="text" placeholder="Enter Skiil Name"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:right-0 sm:text-sm sm:leading-6"
@@ -79,7 +79,7 @@ const AddSkill = () => {
                 <div className='mt-2'>
                   <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600'>
                     <Input
-                      type="text" placeholder="Ending Period"
+                      type="text" placeholder="Enter Proficiency in Skill"
                       value={proficiency}
                       onChange={(e) => setProficiency(e.target.value)}
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:right-0 sm:text-sm sm:leading-6"

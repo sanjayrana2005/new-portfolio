@@ -6,7 +6,6 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
