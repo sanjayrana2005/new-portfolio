@@ -114,7 +114,7 @@ const ManageProjects = () => {
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <Link to={`/update/project/${project._id}`}>
-                            <button onClick={() => handleDeleteTimeline(timeli._id)} className="border-yellow-400 border-2 rounded-full h-8 w-8 flex justify-center items-center text-yellow-400 hover:text-slate-950 hover:bg-ywllow-400 cursor-pointer">
+                            <button className="border-yellow-400 border-2 rounded-full h-8 w-8 flex justify-center items-center text-yellow-400 hover:text-slate-950 hover:bg-ywllow-400 cursor-pointer">
                             <Pen className='h-5 w-5'/>
                             </button>
                                   </Link>

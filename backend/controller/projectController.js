@@ -5,7 +5,7 @@ const cloudinary = require("../utils/cloudinary");
 const addProjectController = async (req, res) => {
     try {
         addProjectValidation(req);
-        const { title, description, gitRepoLink, projectLink, stack, deployed } = req.body;
+        const { title, description, gitRepoLink, projectLink, stack, deployed,technologies } = req.body;
         const { projectImage } = req.files;
 
         const cloudinaryResponse = await cloudinary.uploader.upload(
@@ -27,6 +27,7 @@ const addProjectController = async (req, res) => {
             projectLink,
             stack,
             deployed,
+            technologies,
             projectImage: {
                 public_id: cloudinaryResponse.public_id,
                 url: cloudinaryResponse.secure_url
