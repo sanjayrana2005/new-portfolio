@@ -75,30 +75,34 @@ const ManageTimeLine = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {
-                    timeline && timeline.length > 0 ? (
-                      timeline.map((timeli) => {
-                        return (<TableRow key={timeli._id} className="bg-accent">
-                          <TableCell className="font-medium">
-                            {timeli.title}
-                          </TableCell>
-                          <TableCell className="md:table-cell">{timeli.description}</TableCell>
-                          <TableCell className="md:table-cell">{timeli.timeline.from}</TableCell>
-                          <TableCell className="md:table-cell text-right">{timeli.timeline.to ? timeli.timeline.to : "Present"}</TableCell>
-                          <TableCell className=" flex items-center justify-end">
-                            <button onClick={() => handleDeleteTimeline(timeli._id)} className="border-red-600 border-2 rounded-full h-8 w-8 flex justify-center items-center text-red-600 hover:text-slate-50 hover:bg-red-600 cursor-pointer">
-                              <Trash2 className='h-5 w-5'/>
-                            </button>
-                          </TableCell>
-                        </TableRow>)
-                      })
-                    ) : <TableRow>
-                      <TableCell className="sm:text-3xl overflow-hidden">
-                        You have not added any timeline
-                      </TableCell>
-                    </TableRow>
-                  }
-                </TableBody>
+  {
+    timeline && timeline.length > 0 ? (
+      timeline.map((timeli) => (
+        <TableRow key={timeli._id} className="bg-accent">
+          <TableCell className="font-medium">{timeli.title}</TableCell>
+          <TableCell className="md:table-cell">{timeli.description}</TableCell>
+          <TableCell className="md:table-cell">{timeli.timeline.from}</TableCell>
+          <TableCell className="md:table-cell text-right">{timeli.timeline.to ? timeli.timeline.to : "Present"}</TableCell>
+          <TableCell className="flex items-center justify-end">
+            <button
+              onClick={() => handleDeleteTimeline(timeli._id)}
+              className="border-red-600 border-2 rounded-full h-8 w-8 flex justify-center items-center text-red-600 hover:text-slate-50 hover:bg-red-600 cursor-pointer"
+            >
+              <Trash2 className="h-5 w-5"/>
+            </button>
+          </TableCell>
+        </TableRow>
+      ))
+    ) : (
+      <TableRow>
+        <TableCell colSpan={5} className="sm:text-3xl text-center">
+          You have not added any timeline
+        </TableCell>
+      </TableRow>
+    )
+  }
+</TableBody>
+
               </Table>
             </CardContent>
           </Card>

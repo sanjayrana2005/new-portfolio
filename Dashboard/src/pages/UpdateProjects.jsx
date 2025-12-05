@@ -103,6 +103,46 @@ function UpdateProjects() {
             <Link to="/manage/projects" title="Back" className='text-gray-600 hover:text-black'>
               <ArrowLeft />
             </Link>
+
+            <div className="col-span-full">
+                <label
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                > Project Image
+                </label>
+
+                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-4 py-8">
+                  <div className="text-center">
+                    {
+                      projectImagePreview ? (<img src={projectImagePreview} className='mx-auto h-[250px] w-full text-gray-300' viewBox="0 0 24 24" alt="svg" />) : (<ImagePlus className="mx-auto h-16 w-full text-gray-300"
+                        aria-hidden="true" />)
+                    }
+                    <div className="mt-4 flex justify-center text-sm leading-6 text-gray-600">
+                      <label
+                        htmlFor="file-upload"
+                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                      >
+                        <span>Upload a file</span>
+                        <input
+                          id="file-upload"
+                          name="svg"
+                          type="file"
+                          accept="image/*"
+                          className="sr-only"
+                          onChange={handleProjectImagePreview}
+                        />
+                      </label>
+
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+
+                    <p className="mt-1 text-xs leading-5 text-gray-600">
+                      PNG, JPG, GIF up to 10MB
+                    </p>
+
+                  </div>
+                </div>
+              </div>
+
             <div className='mt-5 flex flex-col gap-5'>
               <div className='w-full sm:col-span-4'>
                 <label className='block text-sm font-medium left-6 text-gray-900'>
@@ -223,45 +263,6 @@ function UpdateProjects() {
                         <SelectItem value="false">No</SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-span-full">
-                <label
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                > Project Image
-                </label>
-
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-10">
-                  <div className="text-center">
-                    {
-                      projectImagePreview ? (<img src={projectImagePreview} className='mx-auto h-[250px] w-full text-gray-300' viewBox="0 0 24 24" alt="svg" />) : (<ImagePlus className="mx-auto h-16 w-full text-gray-300"
-                        aria-hidden="true" />)
-                    }
-                    <div className="mt-4 flex justify-center text-sm leading-6 text-gray-600">
-                      <label
-                        htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                      >
-                        <span>Upload a file</span>
-                        <input
-                          id="file-upload"
-                          name="svg"
-                          type="file"
-                          accept="image/*"
-                          className="sr-only"
-                          onChange={handleProjectImagePreview}
-                        />
-                      </label>
-
-                      <p className="pl-1">or drag and drop</p>
-                    </div>
-
-                    <p className="mt-1 text-xs leading-5 text-gray-600">
-                      PNG, JPG, GIF up to 10MB
-                    </p>
-
                   </div>
                 </div>
               </div>

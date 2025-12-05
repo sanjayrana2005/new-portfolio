@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Tabs, TabsContent} from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -28,28 +28,28 @@ const Dashboard = () => {
   const { user } = useSelector(state => state.user);
   const { projects } = useSelector(state => state.project);
   const { skills } = useSelector(state => state.skill);
-  const { applications,error,message,loading } = useSelector(state => state.application);
+  const { applications, error, message, loading } = useSelector(state => state.application);
   const { timeline } = useSelector(state => state.timeline);
 
-  const dispatch=useDispatch()
-  const [appId,setAppId]=useState("")
+  const dispatch = useDispatch()
+  const [appId, setAppId] = useState("")
   const handleDeleteSoftwareApplication = (_id) => {
     setAppId(_id)
     dispatch(deleteApplication(_id))
   }
 
-  useEffect(()=>{
-    if(error){
+  useEffect(() => {
+    if (error) {
       toast.error(error);
       dispatch(clearAllApplicationSliceErrors());
     }
-    if(message){
+    if (message) {
       toast.success(message);
       dispatch(resetApplicationSliceError());
       dispatch(getAllApplication())
     }
-  },[dispatch,loading,message,error])
-  
+  }, [dispatch, loading, message, error])
+
   return (
     <>
       <div className='flex flex-col sm:gap-4 sm:py-4 sm:pl-14'>
@@ -64,7 +64,7 @@ const Dashboard = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardFooter>
-                  <Link to={user?.linkedInURL}>
+                  <Link to={user?.linkedInURL} target='_blank'>
                     <Button className="cursor-pointer">
                       Visit LinkedIn
                     </Button>
@@ -136,7 +136,7 @@ const Dashboard = () => {
                                 <TableCell><Link to={`/update/project/${project._id}`}>
                                   <Button className="cursor-pointer px-1 sm:px-3">Update</Button>
                                 </Link></TableCell>
-                                <TableCell className="text-right"><Link to={project.projectLink ? project.projectLink : ""}>
+                                <TableCell className="text-right"><Link to={project.projectLink ? project.projectLink : ""} target='_blank'>
                                   <Button className="cursor-pointer px-1.5 sm:px-3">Visit</Button>
                                 </Link></TableCell>
                               </TableRow>
@@ -186,6 +186,7 @@ const Dashboard = () => {
                       </TableRow>
                     }
                   </CardContent>
+
                 </Card>
               </TabsContent>
             </Tabs>
@@ -223,10 +224,10 @@ const Dashboard = () => {
                                         className='w-7 h-7'
                                       /></TableCell>
                                     <TableCell>
-                                    {
-                                      loading && appId === application._id ? <SpecialLoadingButton content={"deleting..."}/> : <Button onClick={() => handleDeleteSoftwareApplication(application._id)} className="cursor-pointer">Delete</Button>
-                                    }
-                                      
+                                      {
+                                        loading && appId === application._id ? <SpecialLoadingButton content={"deleting..."} /> : <Button onClick={() => handleDeleteSoftwareApplication(application._id)} className="cursor-pointer">Delete</Button>
+                                      }
+
                                     </TableCell>
                                   </TableRow>
                                 )
@@ -253,20 +254,23 @@ const Dashboard = () => {
                   <CardContent>
                     <Table>
                       <TableHeader>
-                        <TableHead>Title</TableHead>
-                        <TableHead>From</TableHead>
-                        <TableHead className="text-right">To</TableHead>
+                        <TableRow>
+                          <TableHead>Title</TableHead>
+                          <TableHead>From</TableHead>
+                          <TableHead className="text-right">To</TableHead>
+                        </TableRow>
                       </TableHeader>
+
                       <TableBody>
                         {
                           timeline && timeline.length > 0 ? (
-                            timeline.map((timeli)=>{
+                            timeline.map((timeli) => {
                               return (<TableRow key={timeli._id} className="bg-accent">
-                                  <TableCell className="font-medium">
-                                    {timeli.title}
-                                  </TableCell>
-                                  <TableCell className="md:table-cell">{timeli.timeline.from}</TableCell>
-                                  <TableCell className="md:table-cell text-right">{timeli.timeline.to ? timeli.timeline.to : "Present" }</TableCell>
+                                <TableCell className="font-medium">
+                                  {timeli.title}
+                                </TableCell>
+                                <TableCell className="md:table-cell">{timeli.timeline.from}</TableCell>
+                                <TableCell className="md:table-cell text-right">{timeli.timeline.to ? timeli.timeline.to : "Present"}</TableCell>
                               </TableRow>)
                             })
                           ) : <TableRow>
