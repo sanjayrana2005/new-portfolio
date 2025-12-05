@@ -17,8 +17,8 @@ import SpecialLoadingButton from "../../pages/Sub-components/SpecialLoadingButto
 
 export const LoginForm = (  className,
   ...props)=>{
-    const [email,setEmail]=useState("sanjayrana5113@gmail.com");
-    const [password,setPassword]=useState("Sanjay@123");
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("");
     const {loading,isAuthenticated,error,message}=useSelector(state=>state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ export const LoginForm = (  className,
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="example@gmail.com"
                   value={email}
                   onChange={(e)=>setEmail(e.target.value)}
                   required

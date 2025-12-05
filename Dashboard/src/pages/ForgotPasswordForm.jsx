@@ -13,7 +13,8 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
 import { clearAllForgotPasswordErrors, forgotPassword } from "../store/forgotPasswordSlice"
-import SpecialLoadingButton from "./Sub-components/SpecialLoadingButton"
+import SpecialLoadingButton from "./Sub-components/SpecialLoadingButton";
+import {Link} from "react-router-dom"
 
 export const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("sanjayrana5113@gmail.com");
@@ -68,6 +69,7 @@ export const ForgotPasswordForm = () => {
                 }
 
               </Field>
+                <Link to="/login" className="text-center text-lg font-light text-gray-800 hover:text-black hover:underline w-fit mx-auto">Login</Link>
             </FieldGroup>
           </form>
           <div className="bg-muted relative hidden md:block">
