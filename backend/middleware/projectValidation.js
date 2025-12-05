@@ -60,19 +60,19 @@ const updateProjectValidation = (req) => {
         throw new Error("Invalid update request");
     }
 
-    if (data.title && title.trim().length > 20) {
+    if (data.title && data.title.trim().length > 20) {
         throw new Error("Title should below 20 characters");
     }
 
-    if (data.description && description.trim().length > 500) {
+    if (data.description && data.description.trim().length > 500) {
         throw new Error("Title should below 50 characters");
     }
 
-    if (data.gitRepoLink && !validation.isURL(gitRepoLink.trim())) {
+    if (data.gitRepoLink && !validation.isURL(data.gitRepoLink.trim())) {
         throw new Error("Invalid gitRepo link");
     }
 
-    if (data.projectLink && !validation.isURL(projectLink.trim())) {
+    if (data.projectLink && !validation.isURL(data.projectLink.trim())) {
         throw new Error("Invalid project link");
     }
 
@@ -80,7 +80,7 @@ const updateProjectValidation = (req) => {
         throw new Error("Stack should below 10 characters");
     }
 
-    if (data.deployed && !validation.isBoolean(deployed.toString())) {
+    if (data.deployed && !validation.isBoolean(data.deployed.toString())) {
         throw new Error("Invalid Deployed type");
     }
     return true;

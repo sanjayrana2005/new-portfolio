@@ -119,10 +119,10 @@ export const deleteProject = (id) => async (dispatch) => {
     }
 }
 
-export const updateProject = (id,data) => async (dispatch) => {
+export const updateProject = (id,formData) => async (dispatch) => {
     dispatch(projectSlice.actions.updateProjectRequest());
     try {
-        const {data}=await axios.patch(`${import.meta.env.VITE_BACKEND_BASE_URL}/update-project/${id}`,data,{
+        const {data}=await axios.patch(`${import.meta.env.VITE_BACKEND_BASE_URL}/update-project/${id}`,formData,{
             withCredentials:true,
             headers:{
                 "Content-Type" : "multipart/form-data"
