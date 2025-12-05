@@ -150,15 +150,15 @@ const deleteProjectController = async (req,res)=>{
 const getSingleProjectController = async (req,res)=>{
     try {
         const _id = req.params._id;
-        const singlePtoject = await projectModel.findById(_id);
-        if(!singlePtoject){
+        const singleProject = await projectModel.findById(_id);
+        if(!singleProject){
             return res.status(400).json({
                 message:"Project not found"
             })
         }
         
         res.status(200).json({
-            singlePtoject
+            singleProject
         })
     } catch (error) {
         res.status(400).json({
