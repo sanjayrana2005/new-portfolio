@@ -2,14 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { ArrowLeft } from "lucide-react";
 
 function ViewProjects() {
   const [title, setTitle] = useState("");
@@ -50,8 +43,13 @@ function ViewProjects() {
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>
             <div className='mt-10 flex flex-col gap-5'>
-              <div className='w-full sm:col-span-4'>
-                <h1 className='text-2xl font-bold mb-4'>{title}</h1>
+              <div className='w-full sm:col-span-4 '>
+              <div className='flex items-center gap-2 mb-2'>
+                <Link to="/manage/projects" title='Back'>
+                  <ArrowLeft className='text-gray-600 hover:text-black'/>
+                </Link>
+                <h1 className='text-2xl font-bold'>{title}</h1>
+                </div>
                 <img src={projectImage} alt={title} className='w-full h-auto' />
               </div>
               <div className='w-full sm:col-span-4'>
@@ -97,10 +95,10 @@ function ViewProjects() {
                 </Link>
               </div>
 
-               <div className='w-full sm:col-span-4'>
+              <div className='w-full sm:col-span-4'>
                 <p className='text-2xl mb-2'>Project Link</p>
                 <Link to={projectLink ? projectLink : "#"} className='text-blue-400 hover:text-blue-600' target='__blank'>
-                  {`${projectLink ? projectLink : "Not Live"}`}
+                  {`${projectLink ? projectLink : "Still not Deployed"}`}
                 </Link>
               </div>
 
