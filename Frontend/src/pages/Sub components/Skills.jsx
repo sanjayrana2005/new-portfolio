@@ -12,13 +12,11 @@ import {
 
 const Skills = () => {
     const [skills, setSkills] = useState([]);
-    console.log(skills)
 
     useEffect(() => {
         const getMySkills = async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/get-skill`);
-            setSkills(data.skills)
-            console.log(data)
+            setSkills(data.skills);
         }
         getMySkills();
     }, [])
