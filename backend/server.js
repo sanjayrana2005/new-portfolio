@@ -28,7 +28,9 @@ app.use(
     })
 );
 
-
+app.get("/",(req,res)=>{
+    res.send("Backend Api working")
+})
 app.use("/", messageRouter);
 app.use("/", userRouter);
 app.use("/", timeLineRouter);
