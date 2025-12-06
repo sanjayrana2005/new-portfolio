@@ -1,17 +1,25 @@
-import { ThemeProvider } from './components/ui/theme-provider'
-import { Children } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from './pages/Home';
+import ProjectView from './pages/ProjectView';
+import Footer from './pages/Footer';
+import { ToastContainer, toast,Bounce } from 'react-toastify';
+import "./App.css"
+import { ThemeProvider } from "./components/theme-provider";
 
 const App = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <Router>
-        <Routes>
-            <Route  path='/' element={<Home/>} />
-            <Route  path='/project/:id' element={<ProjectView/>} />
-        </Routes>
-        <Footer/>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/project/:id' element={<ProjectView />} />
+      </Routes>
+      <Footer />
+      <ToastContainer position="top-center"
+        autoClose={5000}
+        transition={Bounce}
+      />
+    </Router>
     </ThemeProvider>
   )
 }
