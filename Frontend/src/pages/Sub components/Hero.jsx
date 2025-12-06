@@ -9,9 +9,6 @@ import { Button } from "@/components/ui/button"
 
 const Hero = () => {
     const [user, setUser] = useState({})
-    console.log(user);
-
-
 
     useEffect(() => {
         const getMyProfile = async () => {
