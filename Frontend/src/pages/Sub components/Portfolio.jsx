@@ -13,7 +13,6 @@ const Portfolio = () => {
         const getMyProjects = async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/getall-project`);
             setProjects(data.allProject);
-            console.log(data)
         }
 
         getMyProjects()
