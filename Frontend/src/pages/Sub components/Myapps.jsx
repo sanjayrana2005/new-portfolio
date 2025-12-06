@@ -11,7 +11,6 @@ const Myapps = () => {
         const getSwftware = async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/get-software`);
             setApps(data.getAllApplication);
-            console.log(data)
         }
         getSwftware();
     }, [])
