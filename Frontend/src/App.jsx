@@ -1,10 +1,18 @@
-import React from 'react'
+import { ThemeProvider } from './components/ui/theme-provider'
+import { Children } from 'react'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <div className=''>
-      hi
-    </div>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Router>
+        <Routes>
+            <Route  path='/' element={<Home/>} />
+            <Route  path='/project/:id' element={<ProjectView/>} />
+        </Routes>
+        <Footer/>
+      </Router>
+    </ThemeProvider>
   )
 }
 
