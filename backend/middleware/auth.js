@@ -7,7 +7,7 @@ const authUser = async (req, res, next) => {
         const { portfolioToken } = req.cookies;
         if (!portfolioToken) {
             return res.status(401).json({
-                message: "Unauthorized"
+                message: "Unauthorized login"
             });
         }
 
