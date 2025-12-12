@@ -12,10 +12,10 @@ const Hero = () => {
 
     useEffect(() => {
         const getMyProfile = async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/me`);
+            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/get-user`);
             setUser(data.user);
         }
-        getMyProfile()
+        getMyProfile();
     }, [])
     return (
         <div className='w-full'>
