@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const generateToken = require('../utils/generateToken');
 const generateResetPAssworToken = require('../utils/generateResetPasswordToken');
 const {sendResetPasswordMail, sendResetPasswordSuccessMail} = require("../utils/sendEmail");
+require("dotenv").config();
 
 
 const signupUserController = async (req, res) => {
@@ -261,7 +262,7 @@ const updatePasswordController = async (req, res) => {
 
 const getUserForPortfolioController = async (req, res) => {
     try {
-        const _id = "692556c4150c21ba8018866b";
+        const _id = process.env.USER_ID;
         const user = await userModel.findById(_id);
         res.status(200).json({
             user
