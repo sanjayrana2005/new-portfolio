@@ -19,6 +19,7 @@ import { getAllTimeline } from './store/timelineSlice';
 import { getAllSkills } from './store/skillSlice';
 import { getAllApplication } from './store/applicationSlice';
 import { getAllProjects } from './store/projectSlice';
+import { ProtectedRoute } from './pages/ProtectedRoute';
 
 const App = () => {
 
@@ -38,16 +39,55 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        } />
+
         <Route path='/login' element={<Login />} />
-        <Route path='/password/update' element={<PasswordUpdate />} />
-        <Route path='/password/forgot' element={<ForgotPasswod />} />
+
+        <Route path='/password/update' element={
+          // <ProtectedRoute>
+            <PasswordUpdate />
+          /* </ProtectedRoute> */
+        } />
+
+        <Route path='/password/forgot' element={
+            <ForgotPasswod />
+        } />
+
         <Route path='/password/reset' element={<PasswordReset />} />
-        <Route path='/manage/skills' element={<ManageSkills />} />
-        <Route path='/manage/timeline' element={<ManageTimeLine />} />
-        <Route path='/manage/projects' element={<ManageProjects />} />
-        <Route path='/view/projects/:id' element={<ViewProjects />} />
-        <Route path='/update/project/:id' element={<UpdateProjects />} />
+
+        <Route path='/manage/skills' element={
+          // <ProtectedRoute>
+            <ManageSkills />
+          // </ProtectedRoute>
+        } />
+
+        <Route path='/manage/timeline' element={
+          // <ProtectedRoute>
+            <ManageTimeLine />
+          /* </ProtectedRoute> */
+        } />
+
+        <Route path='/manage/projects' element={
+          // <ProtectedRoute>
+            <ManageProjects />
+          /* </ProtectedRoute> */
+        } />
+
+        <Route path='/view/projects/:id' element={
+          // <ProtectedRoute>
+            <ViewProjects />
+          // </ProtectedRoute>
+        } />
+
+        <Route path='/update/project/:id' element={
+          // <ProtectedRoute>
+            <UpdateProjects />
+          /* </ProtectedRoute> */
+        } />
 
       </Routes>
       <ToastContainer position='top-center' theme='dark' />

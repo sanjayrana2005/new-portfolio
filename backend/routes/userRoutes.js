@@ -6,8 +6,8 @@ const userRouter = express.Router();
 
 userRouter.post("/signup",signupUserController);
 userRouter.post("/login",loginController);
-userRouter.get("/logout",authUser,logOutController);
-userRouter.get("/me",getUserController);
+userRouter.get("/logout",logOutController);
+userRouter.get("/me",authUser,getUserController);
 userRouter.patch("/update-profile",authUser,updateProfilecontroller);
 userRouter.patch("/update-password",authUser,updatePasswordController);
 userRouter.get("/get-user",getUserForPortfolioController);

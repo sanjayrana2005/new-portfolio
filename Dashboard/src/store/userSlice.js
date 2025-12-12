@@ -39,13 +39,15 @@ const userSlice = createSlice({
         },
         loadUserFailed(state, action) {
             state.loading = false;
-            state.error = null;
+            state.isAuthenticated=false;
+            state.user=null;
+            state.error = action.payload;
         },
 
         logoutUserSuccess(state, action) {
             state.loading = false;
             state.isAuthenticated = false;
-            state.user = {};
+            state.user = null;
             state.message = action.payload; 
         },
         logoutUserFailed(state, action) {
@@ -121,14 +123,13 @@ export const login = (email, password) => async (dispatch) => {
 export const getUser = () => async (dispatch) => {
     dispatch(userSlice.actions.loadUserRequest());
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/me`,
-            {
-                withCredentials: true
-            });
+        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/me`,{
+            withCredentials:true
+        });
         dispatch(userSlice.actions.loadUserSuccess(data.user));
         dispatch(userSlice.actions.clearAllErrors());
     } catch (error) {
-        dispatch(userSlice.actions.loadUserFailed(error.response.data.message))
+        dispatch(userSlice.actions.loadUserFailed(error.response?.data?.message))
     }
 }
 

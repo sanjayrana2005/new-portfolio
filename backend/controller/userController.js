@@ -143,7 +143,7 @@ const logOutController = (req, res) => {
 
 const getUserController = async (req, res) => {
     try {
-        const _id = process.env.USER_ID;
+        const _id = req.user.id;
 
         const user = await userModel.findById({ _id });
 

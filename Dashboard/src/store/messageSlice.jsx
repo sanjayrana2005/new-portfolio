@@ -54,7 +54,7 @@ export const getAllMessages = () => async (dispatch) => {
         dispatch(messageSlice.actions.getAllMessagesSuccess(data.messages))
         dispatch(messageSlice.actions.clearAllMessagesError())
     } catch (error) {
-        dispatch(messageSlice.actions.getAllMessagesFailed(error.responce.data.message));
+        dispatch(messageSlice.actions.getAllMessagesFailed(error.responce?.data?.message));
     }
 }
 

@@ -11,18 +11,17 @@ import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { clearAllUserErrors, login } from "../../store/userSlice"
+import { clearAllUserErrors, getUser, login } from "../../store/userSlice"
 import { toast } from "react-toastify"
 import SpecialLoadingButton from "../../pages/Sub-components/SpecialLoadingButton"
 
-export const LoginForm = (  className,
-  ...props)=>{
+export const LoginForm = (  {className,
+  ...props})=>{
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
     const {loading,isAuthenticated,error,message}=useSelector(state=>state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
     const handlelogin = (e) => {
         e.preventDefault();
         dispatch(login(email,password))
@@ -77,8 +76,7 @@ export const LoginForm = (  className,
               </Field>
               <Field>
               {
-                loading ? <SpecialLoadingButton content="Logging In"/> :
-                <Button 
+                loading ? <SpecialLoadingButton content="Logging In"/> :<Button 
                 onClick={handlelogin}
                 className="cursor-pointer" type="submit">Login</Button>
               }

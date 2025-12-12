@@ -186,11 +186,6 @@ function HomePage() {
           </SheetTrigger>
 
           <SheetContent side="left" className="sm:max-w-xs">
-
-            <SheetHeader>
-              <SheetTitle className="sr-only">Navigation</SheetTitle>
-              <SheetDescription className="sr-only">Mobile navigation menu</SheetDescription>
-            </SheetHeader>
             <nav className='grid gap-6 text-lg font-medium'>
 
               <Link href="#" className={`mt-15 flex items-center gap-4 px-2.5 ${active === "Dashboard" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
