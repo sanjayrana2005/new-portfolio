@@ -8,9 +8,7 @@ const About = () => {
 
     useEffect(() => {
         const getMyProfile = async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/me`, {
-                withCredentials: true
-            });
+            const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/get-user`);
             setUser(data.user);
         }
         getMyProfile()
