@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { clearAllUserErrors, getUser, login } from "../../store/userSlice"
+import { clearAllUserErrors, getUser, login, resetProfile } from "../../store/userSlice"
 import { toast } from "react-toastify"
 import SpecialLoadingButton from "../../pages/Sub-components/SpecialLoadingButton"
 
@@ -34,6 +34,7 @@ export const LoginForm = (  {className,
         if(isAuthenticated){
             toast.success(message)
             navigate("/");
+            dispatch(resetProfile());
         }
     },[dispatch,isAuthenticated,error,loading])
   return (
