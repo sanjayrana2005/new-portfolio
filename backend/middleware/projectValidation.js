@@ -22,12 +22,6 @@ const addProjectValidation = (req) => {
         throw new Error("Invalid gitRepo link");
     }
 
-    if (!projectLink) {
-        throw new Error("Enter project link");
-    } else if (!validation.isURL(projectLink.trim())) {
-        throw new Error("Invalid project link");
-    }
-
     if (!technologies) {
         throw new Error("Enter technologies");
     }
