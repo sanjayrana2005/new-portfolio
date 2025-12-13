@@ -110,7 +110,7 @@ const updateProjectController = async (req, res) => {
 
 const getAllProjectController = async (req,res) => {
 try {
-    const allProject = (await projectModel.find()).sort({createdAt:-1});
+    const allProject = await projectModel.find().sort({createdAt:-1});
 
     res.status(200).json({
         allProject
