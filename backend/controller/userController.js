@@ -199,7 +199,8 @@ const updateProfilecontroller = async (req, res) => {
             await cloudinary.uploader.destroy(public_id);
             const cloudinaryResponse = await cloudinary.uploader.upload(
                 resume.tempFilePath, {
-                folder: "Resume"
+                folder: "Resume",
+                resource_type:"auto"
             });
 
             resumeData = {
