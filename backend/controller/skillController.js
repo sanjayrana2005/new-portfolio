@@ -94,7 +94,7 @@ const updateSkillController = async (req, res) => {
 
 const getAllSkillController = async (req, res) => {
     try {
-        const skills = await skillModel.find();
+        const skills = await skillModel.find().sort({createdAt:-1});
         res.status(200).json({
             skills
         });

@@ -63,7 +63,7 @@ const deleteApplicationController = async (req,res) => {
 
 const getAllApplicationController = async (req,res) => {
     try {
-        const getAllApplication = await softwareModel.find();
+        const getAllApplication = await softwareModel.find().sort({createdAt:-1});
         res.status(200).json({
             getAllApplication
         })

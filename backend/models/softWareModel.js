@@ -12,7 +12,7 @@ const softwareSchem = new mongoose.Schema({
             required:true
         }
     }
-});
+},{timestamps:true});
 
 const softwareModel = mongoose.model("software",softwareSchem);
 
