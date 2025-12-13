@@ -13,7 +13,7 @@ const addProjectValidation = (req) => {
     if (!description) {
         throw new Error("Enter description");
     } else if (description.trim().length > 500) {
-        throw new Error("Title should below 50 characters");
+        throw new Error("description should below 500 characters");
     }
 
     if (!gitRepoLink) {
