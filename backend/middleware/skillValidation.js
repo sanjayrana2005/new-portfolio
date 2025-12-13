@@ -4,8 +4,8 @@ const addSkillValidation = (req) => {
 
     if (!title) {
         throw new Error("Enter title");
-    } else if (title.trim().length > 10) {
-        throw new Error("Title should below 10 characters");
+    } else if (title.trim().length > 20) {
+        throw new Error("Title should below 20 characters");
     }
 
     if (!proficiency) {
