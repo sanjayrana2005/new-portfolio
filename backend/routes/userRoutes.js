@@ -6,7 +6,7 @@ const userRouter = express.Router();
 
 userRouter.post("/signup",signupUserController);
 userRouter.post("/login",loginController);
-userRouter.get("/logout",logOutController);
+userRouter.get("/logout",authUser,logOutController);
 userRouter.get("/me",authUser,getUserController);
 userRouter.patch("/update-profile",authUser,updateProfilecontroller);
 userRouter.patch("/update-password",authUser,updatePasswordController);
