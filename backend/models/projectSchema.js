@@ -24,7 +24,7 @@ const projectSchema = new mongoose.Schema({
             required:true
         }
     }
-});
+},{timestamps:true});
 
 const projectModel = mongoose.model("project",projectSchema);
 
