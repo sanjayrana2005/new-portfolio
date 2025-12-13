@@ -102,7 +102,7 @@ const UpdateProfile = () => {
                                 className='w-full h-auto sm:w-72 sm:h-72 rounded-2xl'
                             />
                             <div className='relative '>
-                                <Input type='file' className='avatar-update-btn border-gray-300 p-0  h-full m-0 ' onChange={resumeHandler} />
+                                <Input type='file' acc className='avatar-update-btn border-gray-300 p-0  h-full m-0 ' onChange={resumeHandler} />
                             </div>
                         </div>
                     </div>

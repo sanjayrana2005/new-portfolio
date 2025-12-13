@@ -207,6 +207,7 @@ const updateProfilecontroller = async (req, res) => {
                 public_id: cloudinaryResponse.public_id,
                 url: cloudinaryResponse.secure_url
             }
+            
             if (!cloudinaryResponse || cloudinaryResponse.error) {
                 return res.status(500).json({
                     message: "Resume upload failed",

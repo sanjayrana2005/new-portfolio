@@ -6,8 +6,8 @@ const addProjectValidation = (req) => {
 
     if (!title) {
         throw new Error("Enter title");
-    } else if (title.trim().length > 20) {
-        throw new Error("Title should below 20 characters");
+    } else if (title.trim().length > 50) {
+        throw new Error("Title should below 50 characters");
     }
 
     if (!description) {
@@ -60,8 +60,8 @@ const updateProjectValidation = (req) => {
         throw new Error("Invalid update request");
     }
 
-    if (data.title && data.title.trim().length > 20) {
-        throw new Error("Title should below 20 characters");
+    if (data.title && data.title.trim().length > 50) {
+        throw new Error("Title should below 50 characters");
     }
 
     if (data.description && data.description.trim().length > 500) {
