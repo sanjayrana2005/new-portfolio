@@ -33,7 +33,6 @@ const About = () => {
 
                     </div>
                 </div>
-                <p className='tracking-[1px] text-xl'>I’m eager to take up internships or job opportunities where I can apply my skills, gain industry experience, and contribute to impactful projects.</p>
             </div>
         </div>
     )
