@@ -20,6 +20,7 @@ function projectView() {
         const getProject = async () => {
             await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/get-single-project/${id}`)
                 .then((res) => {
+                    console.log(res.data.singleProject)
                     setTitle(res.data.singleProject?.title);
                     setDescription(res.data.singleProject?.description);
                     setGitRepoLink(res.data.singleProject?.gitRepoLink);
@@ -87,7 +88,7 @@ function projectView() {
 
                             <div className='w-full sm:col-span-4'>
                                 <p className='text-2xl mb-2'>Deployed</p>
-                                <p>{deployed === "true" ? "Yes" : "No"}</p>
+                                <p>{deployed ? "Yes" : "No"}</p>
                             </div>
 
                             <div className='w-full sm:col-span-4'>

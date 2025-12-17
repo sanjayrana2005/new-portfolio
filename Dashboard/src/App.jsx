@@ -7,7 +7,7 @@ import ManageTimeLine from './pages/ManageTimeLine';
 import ManageProjects from './pages/ManageProjects';
 import ViewProjects from './pages/ViewProjects';
 import UpdateProjects from './pages/UpdateProjects';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import Login from './pages/Login';
 import PasswordUpdate from './pages/PasswordUpdate';
 import { useDispatch } from 'react-redux';
