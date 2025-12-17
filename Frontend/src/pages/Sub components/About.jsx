@@ -24,7 +24,7 @@ const About = () => {
             <div>
                 <div className='grid md:grid-cols-2 my-8 sm:my-20 gap-20'>
                     <div className='flex justify-center items-center'>
-                        <img src={user.avatar && user.avatar.url} alt={user.fullName} className='bg-white p-2 sm:p-4 rotate-25 h-60 sm:h[340px] md:h-[350px] lg:h-[450px]' />
+                        <img src={user.avatar && user.avatar.url} alt={user.fullName} className='bg-white p-2 sm:p-4 h-60 sm:h[340px] md:h-[350px] lg:h-[450px]' />
                     </div>
                     <div className='flex justify-center
                      flex-col tracking-[1px] text-xl gap-5'>
